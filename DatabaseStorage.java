@@ -16,7 +16,7 @@ public class DatabaseStorage {
     // private static final String STORE_DATABASE_PATH = "";
 
     private List<Clients> clients;
-    private List<Products> store;
+    //private List<Products> store;
     // private List<Store> products;
 
     public static DatabaseStorage db;
@@ -25,7 +25,7 @@ public class DatabaseStorage {
     public DatabaseStorage() {
         try {
             clients = CreatingClientList();
-            store = CreateingProductStore();
+            //product = CreateingProductStore();
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
@@ -99,7 +99,7 @@ public class DatabaseStorage {
         return returnList;
     }
 
-    private List<Products> CreateingProductStore() throws IOException, ParseException {
+    /*private List<Products> CreateingProductStore() throws IOException, ParseException {
         JSONArray jsonList = initializationFiles(CLIENTS_DATABASE_PATH);
         List<Products> returnList = new ArrayList<>();
 
@@ -112,6 +112,6 @@ public class DatabaseStorage {
         returnList.stream().forEach(System.out::println);
 
         return returnList;
-    }
+    }*/
 
 }
