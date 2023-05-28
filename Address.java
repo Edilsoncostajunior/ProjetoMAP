@@ -19,6 +19,19 @@ public class Address {
         this.state = (String) json.get("state");
     }
 
+    /* Estou utilizando esse construtor para as lojas, tentar achar um jeito de usar o outro depois...
+    public Address(String id, String street, String house_number, String neighbourhood, String postal_code, String city,
+            String state) {
+        this.id = id;
+        this.street = street;
+        this.house_number = house_number;
+        this.neighbourhood = neighbourhood;
+        this.postal_code = postal_code;
+        this.city = city;
+        this.state = state;
+    }
+    */
+
     public String getStreet() {
         return street;
     }
