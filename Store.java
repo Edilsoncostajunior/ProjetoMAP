@@ -1,8 +1,13 @@
-import java.io.FileWriter;
-import java.io.IOException;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Store {
     private String name;
@@ -44,25 +49,11 @@ public class Store {
     }
 
     public String getCpfCnpj() {
-        return diferencaCpfCnpj();
-        //Talvez aqui mude...
+        return this.cpfCnpj;
     }
 
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
-    }
-
-    public String diferencaCpfCnpj() {
-
-        if (cpfCnpj.length() == 11) {
-            return cpfCnpj.substring(0, 3) + "." + cpfCnpj.substring(3, 6) + "." + cpfCnpj.substring(6, 9) + "-" + cpfCnpj.substring(9);
-        }
-
-        if (cpfCnpj.length() == 14) {
-            return cpfCnpj.substring(0, 2) + "." + cpfCnpj.substring(2, 5) + "." + cpfCnpj.substring(5, 8) + "/" + cpfCnpj.substring(8, 11) + "-" + cpfCnpj.substring(11);
-        }
-
-        return cpfCnpj;
     }
 
     public Address getAddress() {
@@ -75,11 +66,11 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store [name=" + name + ", email=" + email + ", password=" + password + ", cpfCnpj=" + diferencaCpfCnpj()
+        return "Store [name=" + name + ", email=" + email + ", password=" + password + ", cpfCnpj=" + cpfCnpj
                 + ", address=" + address + "]";
     }
 
-    public static String storeToJson(Store store) {
+    public static JSONObject storeToJson(Store store) {
         JSONObject jsonObject = new JSONObject();
         JSONObject addressJson = new JSONObject();
         JSONArray addressArray = new JSONArray();
@@ -99,16 +90,155 @@ public class Store {
 
         jsonObject.put("address", addressArray);
 
-        return jsonObject.toJSONString();
+        return jsonObject;
     }
 
-    public static void write(Store store){
-        try (FileWriter fileWriter = new FileWriter("store.json")) {
-            fileWriter.write(storeToJson(store));
-            fileWriter.flush();
-        } catch (IOException e) {
-            System.err.println("Erro ao salvar o JSON no arquivo: store.json");
+
+    public static List<Store> read() throws IOException, ParseException {
+        List<Store> storeList = new ArrayList<>();
+        try (FileReader fileReader = new FileReader("store.json")) {
+            JSONArray jsonArray = (JSONArray) new JSONParser().parse(fileReader);
+            for (Object obj : jsonArray) {
+                JSONObject jsonObject = (JSONObject) obj;
+                JSONObject addressObj = (JSONObject) ((JSONArray) jsonObject.get("address")).get(0);
+                storeList.add(new Store(
+                        (String) jsonObject.get("name"),
+                        (String) jsonObject.get("email"),
+                        (String) jsonObject.get("password"),
+                        (String) jsonObject.get("cpfCnpj"),
+                        new Address(
+                                (String) addressObj.get("id"),
+                                (String) addressObj.get("street"),
+                                (String) addressObj.get("house_number"),
+                                (String) addressObj.get("neighbourhood"),
+                                (String) addressObj.get("postal_code"),
+                                (String) addressObj.get("city"),
+                                (String) addressObj.get("state"))
+                ));
+            }
+        } catch (ParseException e) {
+            System.err.println("Erro ao ler o arquivo JSON: store.json");
             e.printStackTrace();
         }
+        return storeList;
+    }
+
+    public void write(Store store) {
+        List<Store> storeList = new ArrayList<>();
+        try {
+            storeList = read();
+        } catch (IOException | ParseException e) {
+            System.err.println("Erro ao ler o arquivo JSON: store.json");
+            e.printStackTrace();
+        }
+
+        if (store.isUniqueCpfCnpj(storeList)) {
+            storeList.add(store);
+        } else {
+            System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
+        }
+
+        try (FileWriter fileWriter = new FileWriter("store.json")) {
+            JSONArray jsonArray = new JSONArray();
+            for (Store storeObj : storeList) {
+                jsonArray.add(storeToJson(storeObj));
+            }
+            fileWriter.write(jsonArray.toJSONString());
+            fileWriter.flush();
+            System.out.println("Arquivo JSON store.json existe");
+        } catch (IOException e) {
+            System.err.println("Erro ao atualizar o JSON store.json");
+            e.printStackTrace();
+        }
+    }
+
+
+    public void update(String storeName, Store updatedStore) {
+        List<Store> storeList = new ArrayList<>();
+        try {
+            storeList = read();
+        } catch (IOException | ParseException e) {
+            System.err.println("Erro ao ler o arquivo JSON store.json");
+            e.printStackTrace();
+        }
+
+        if (!updatedStore.isUniqueCpfCnpj(storeList)) {
+            for (int i = 0; i < storeList.size(); i++) {
+                if (storeList.get(i).getName().equals(storeName)) {
+                    storeList.set(i, updatedStore);
+                    break;
+                }
+            }
+
+            try (FileWriter fileWriter = new FileWriter("store.json")) {
+                JSONArray jsonArray = new JSONArray();
+                for (Store storeObj : storeList) {
+                    jsonArray.add(storeToJson(storeObj));
+                }
+                fileWriter.write(jsonArray.toJSONString());
+                fileWriter.flush();
+                System.out.println("Store atualizada no arquivo store.json");
+            } catch (IOException e) {
+                System.err.println("Erro ao atualizar o JSON no arquivo store.json");
+                e.printStackTrace();
+            }
+        } else{
+            System.out.println("Cpf ou Cnpj não corresponde a uma store existente");
+        }
+    }
+
+    public static void remove(String storeName, String cpfCnpj) {
+        List<Store> storeList = new ArrayList<>();
+        try {
+            storeList = read();
+        } catch (IOException | ParseException e) {
+            System.err.println("Erro ao ler o arquivo JSON store.json");
+            e.printStackTrace();
+        }
+
+        if (isStoreDeletable(storeName, cpfCnpj)) {
+            storeList.removeIf(store -> store.getName().equals(storeName));
+
+            try (FileWriter fileWriter = new FileWriter("store.json")) {
+                JSONArray jsonArray = new JSONArray();
+                for (Store storeObj : storeList) {
+                    jsonArray.add(storeToJson(storeObj));
+                }
+                fileWriter.write(jsonArray.toJSONString());
+                fileWriter.flush();
+                System.out.println("JSON atualizado no arquivo store.json");
+            } catch (IOException e) {
+                System.err.println("Erro ao atualizar o JSON no arquivo store.json");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Nome ou Cpf/Cnpj não corresponde a uma store existente.");
+        }
+    }
+
+    public boolean isUniqueCpfCnpj(List<Store> storeList) {
+        for (Store store : storeList) {
+            if (this.cpfCnpj.equals(store.getCpfCnpj())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static boolean isStoreDeletable(String storeName, String cpfCnpj) {
+        List<Store> storeList = new ArrayList<>();
+        try {
+            storeList = read();
+        } catch (IOException | ParseException e) {
+            System.err.println("Erro ao ler o arquivo JSON: store.json");
+            e.printStackTrace();
+        }
+
+        for (Store store : storeList) {
+            if (store.getName().equals(storeName) && store.getCpfCnpj().equals(cpfCnpj)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

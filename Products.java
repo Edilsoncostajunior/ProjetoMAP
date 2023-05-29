@@ -15,7 +15,7 @@ public class Products {
 
     private String brand;
     private String description;
-    private String category; 
+    private String category;
     private String name;
     private double value;
     private int quantity;
@@ -96,7 +96,7 @@ public class Products {
         sb.append(":");
         sb.append(value);
         sb.append(",");
-        sb.append("\"quatidade\"");
+        sb.append("\"quantidade\"");
         sb.append(":");
         sb.append(quantity);
         sb.append("}");
@@ -152,6 +152,6 @@ public class Products {
         return Json;
     }
 
-   
+
 
 }
