@@ -12,12 +12,14 @@ public class Store {
     private String documento;
     private Address address;
 
-    public Store(String name, String email, String password, String documento, Address address) {
+    public Store(String name, String email, String password, String documento, String street, String house_number,
+            String neighbourhood, String postal_code, String city,
+            String state, String country) {
         this.name = name;
         this.email = email;
         this.password = password;
         this.documento = documento;
-        this.address = address;
+        this.address = new Address(street, house_number, neighbourhood, postal_code, city, state, country);
     }
 
     public Store(JSONObject json) {
@@ -29,7 +31,6 @@ public class Store {
         this.address = new Address((JSONObject) json.get("address"));
     }
 
-    
     public void valuesStore(Map<String, String> changes) {
         if (changes.size() == 0)
             return;

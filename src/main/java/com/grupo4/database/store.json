@@ -1,0 +1,34 @@
+[
+  {
+    "name": "Lucas",
+    "documento": "null",
+    "password": "asfas",
+    "address": {
+      "country": "null",
+      "city": "null",
+      "street": "null",
+      "neighbourhood": "null",
+      "house_number": "null",
+      "state": "null",
+      "postal_code": "null"
+    },
+    "id": null,
+    "email": "21321321321"
+  },
+  {
+    "name": "Lucas",
+    "documento": "23132132",
+    "password": "asfas",
+    "address": {
+      "country": "null",
+      "city": "null",
+      "street": "null",
+      "neighbourhood": "null",
+      "house_number": "null",
+      "state": "null",
+      "postal_code": "null"
+    },
+    "id": null,
+    "email": "21321321321"
+  }
+]

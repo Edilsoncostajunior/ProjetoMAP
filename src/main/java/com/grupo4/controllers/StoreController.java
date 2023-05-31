@@ -18,9 +18,11 @@ public class StoreController {
         return stores;
     }
 
-    public void write(Store store) {
-        if (isUniquedocumento(store)) {
-            stores.add(store);
+    public void write(String name, String email, String password, String documento, String street, String house_number,
+            String neighbourhood, String postal_code, String city, String state, String country) {
+        if (isUniquedocumento(documento)) {
+            stores.add(new Store(name, email, password, documento, street, house_number, neighbourhood, postal_code,
+                    city, state, country));
             DatabaseStorage.writtingStoreFile(stores);
         } else {
             System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
@@ -38,7 +40,7 @@ public class StoreController {
             return;
         }
 
-        if (isUniquedocumento(stores.get(client_index))) {
+        if (isUniquedocumento(stores.get(client_index).getdocumento())) {
             stores.get(client_index).valuesStore(changes);
             DatabaseStorage.writtingStoreFile(stores);
         } else {
@@ -51,11 +53,9 @@ public class StoreController {
         DatabaseStorage.writtingStoreFile(stores);
     }
 
-    public boolean isUniquedocumento(Store store_comp) {
+    public boolean isUniquedocumento(String store_comp) {
         for (Store store : stores) {
-            if (store.equals(store_comp))
-                continue;
-            if (store_comp.getdocumento().equals(store.getdocumento())) {
+            if (store_comp.equals(store.getdocumento())) {
                 return false;
             }
         }
