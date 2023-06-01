@@ -19,11 +19,11 @@ public class StoreController {
         return stores;
     }
 
-    public void write(String name, String email, String password, String documento, String street, String house_number,
+    public void write(String id, String name, String email, String password, String documento, String street, String house_number,
             String neighbourhood, String postal_code, String city, String state, String country) {
-        if (isUniquedocumento(documento)) {
-            stores.add(new Store(name, email, password, documento, street, house_number, neighbourhood, postal_code,
+            stores.add(new Store(id, name, email, password, documento, street, house_number, neighbourhood, postal_code,
                     city, state, country));
+        if (isUniquedocumento(documento)) {
             DatabaseStorage.writtingStoreFile(stores);
         } else {
             System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
