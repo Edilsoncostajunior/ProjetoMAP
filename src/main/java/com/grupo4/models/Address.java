@@ -114,10 +114,18 @@ public class Address {
         this.state = state;
     }
 
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    } 
+
     @Override
     public String toString() {
         return "Address [street=" + street + ", house_number=" + house_number + ", neighbourhood=" + neighbourhood
-                + ", postal_code=" + postal_code + ", city=" + city + ", state=" + state + "]";
+                + ", postal_code=" + postal_code + ", city=" + city + ", state=" + state + ", country=" + country + "]";
     }
 
 }
