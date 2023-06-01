@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.stream.IntStream;
 
 import com.grupo4.config.DatabaseStorage;
+import com.grupo4.error.NullReadableValuesToWriteException;
 import com.grupo4.models.Store;
 
 public class StoreController {
@@ -29,7 +30,7 @@ public class StoreController {
         }
     }
 
-    public void update(Map<String, String> changes) {
+    public void update(Map<String, String> changes) throws NullReadableValuesToWriteException {
         int client_index = IntStream.range(0, stores.size())
                 .filter(i -> stores.get(i).getId().equals(changes.get("id")))
                 .findFirst()
@@ -40,8 +41,8 @@ public class StoreController {
             return;
         }
 
-        if (isUniquedocumento(stores.get(client_index).getdocumento())) {
-            stores.get(client_index).valuesStore(changes);
+        if (isUniquedocumento(stores.get(client_index).getDocument())) {
+            stores.get(client_index).update(changes);
             DatabaseStorage.writtingStoreFile(stores);
         } else {
             System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
@@ -55,7 +56,7 @@ public class StoreController {
 
     public boolean isUniquedocumento(String store_comp) {
         for (Store store : stores) {
-            if (store_comp.equals(store.getdocumento())) {
+            if (store_comp.equals(store.getDocument())) {
                 return false;
             }
         }

@@ -5,36 +5,20 @@ import java.util.Map;
 
 import org.json.simple.JSONObject;
 
-import com.grupo4.error.ConstructorRequirementsNotAttendedException;
-
 public class Client {
     private String id;
     private String name;
-    private String cpf;
+    private String document;
     private String email;
     private String password;
     private Address address;
 
-    public Client(Map<String, String> mapping) {
-        try {
-            if (mapping.size() != 12)
-                throw new ConstructorRequirementsNotAttendedException("Mapeamento não contém todas as informações");
-            if (mapping.containsKey("id"))
-                this.id = mapping.get("id");
-
-            this.address = new Address();
-            this.valuesClient(mapping);
-        } catch (Exception e) {
-            System.err.println(e.getMessage());
-        }
-    }
-
-    public Client(String id, String name, String cpf, String email, String password, String street,
+    public Client(String id, String name, String document, String email, String password, String street,
             String house_number, String neighbourhood, String postal_code, String city,
             String state, String country) {
         this.id = id;
         this.name = name;
-        this.cpf = cpf;
+        this.document = document;
         this.email = email;
         this.password = password;
         this.address = new Address(street, house_number, neighbourhood, postal_code, city, state, country);
@@ -43,7 +27,7 @@ public class Client {
     public Client(JSONObject json) {
         this.id = (String) json.get("id");
         this.name = (String) json.get("name");
-        this.cpf = (String) json.get("cpf");
+        this.document = (String) json.get("document");
         this.email = (String) json.get("email");
         this.password = (String) json.get("password");
         this.address = new Address((JSONObject) json.get("address"));
@@ -54,7 +38,7 @@ public class Client {
 
         map.put("id", this.id);
         map.put("name", this.name);
-        map.put("cpf", this.cpf);
+        map.put("document", this.document);
         map.put("email", this.email);
         map.put("password", this.password);
         map.put("address", this.address.transformToJsonObject());
@@ -62,20 +46,20 @@ public class Client {
         return new JSONObject(map);
     }
 
-    public void valuesClient(Map<String, String> changes) {
+    public void update(Map<String, String> changes) {
         if (changes.size() == 0)
             return;
 
         if (changes.containsKey("name"))
             this.name = changes.get("name");
-        if (changes.containsKey("cpf"))
-            this.cpf = changes.get("cpf");
+        if (changes.containsKey("document"))
+            this.document = changes.get("document");
         if (changes.containsKey("email"))
             this.email = changes.get("email");
         if (changes.containsKey("password"))
             this.password = changes.get("password");
 
-        this.address.valuesAddress(changes);
+        this.address.updateAddress(changes);
     }
 
     public String getName() {
@@ -86,12 +70,12 @@ public class Client {
         this.name = name;
     }
 
-    public String getCpf() {
-        return cpf;
+    public String getDocument() {
+        return document;
     }
 
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public String getEmail() {
@@ -120,7 +104,8 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client [name=" + name + ", cpf=" + cpf + ", email=" + email + ", password=" + password + ", address="
+        return "Client [name=" + name + ", document=" + document + ", email=" + email + ", password=" + password
+                + ", address="
                 + address + "]";
     }
 

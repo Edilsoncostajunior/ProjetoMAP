@@ -9,16 +9,16 @@ public class Store {
     private String name;
     private String email;
     private String password;
-    private String documento;
+    private String document;
     private Address address;
 
-    public Store(String name, String email, String password, String documento, String street, String house_number,
+    public Store(String name, String email, String password, String document, String street, String house_number,
             String neighbourhood, String postal_code, String city,
             String state, String country) {
         this.name = name;
         this.email = email;
         this.password = password;
-        this.documento = documento;
+        this.document = document;
         this.address = new Address(street, house_number, neighbourhood, postal_code, city, state, country);
     }
 
@@ -27,24 +27,24 @@ public class Store {
         this.name = (String) json.get("name");
         this.email = (String) json.get("email");
         this.password = (String) json.get("password");
-        this.documento = (String) json.get("documento");
+        this.document = (String) json.get("document");
         this.address = new Address((JSONObject) json.get("address"));
     }
 
-    public void valuesStore(Map<String, String> changes) {
+    public void update(Map<String, String> changes) {
         if (changes.size() == 0)
             return;
 
         if (changes.containsKey("name"))
             this.name = changes.get("name");
-        if (changes.containsKey("documento"))
-            this.documento = changes.get("documento");
+        if (changes.containsKey("document"))
+            this.document = changes.get("document");
         if (changes.containsKey("email"))
             this.email = changes.get("email");
         if (changes.containsKey("password"))
             this.password = changes.get("password");
 
-        this.address.valuesAddress(changes);
+        this.address.updateAddress(changes);
     }
 
     public JSONObject transformToJsonObject() {
@@ -52,7 +52,7 @@ public class Store {
 
         map.put("id", this.id);
         map.put("name", this.name);
-        map.put("documento", this.documento);
+        map.put("document", this.document);
         map.put("email", this.email);
         map.put("password", this.password);
         map.put("address", this.address.transformToJsonObject());
@@ -62,7 +62,7 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store [name=" + name + ", email=" + email + ", password=" + password + ", documento=" + documento
+        return "Store [name=" + name + ", email=" + email + ", password=" + password + ", document=" + document
                 + ", address=" + address + "]";
     }
 
@@ -94,12 +94,12 @@ public class Store {
         this.password = password;
     }
 
-    public String getdocumento() {
-        return documento;
+    public String getDocument() {
+        return document;
     }
 
-    public void setdocumento(String documento) {
-        this.documento = documento;
+    public void setDocument(String document) {
+        this.document = document;
     }
 
     public Address getAddress() {
@@ -118,7 +118,7 @@ public class Store {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((email == null) ? 0 : email.hashCode());
         result = prime * result + ((password == null) ? 0 : password.hashCode());
-        result = prime * result + ((documento == null) ? 0 : documento.hashCode());
+        result = prime * result + ((document == null) ? 0 : document.hashCode());
         result = prime * result + ((address == null) ? 0 : address.hashCode());
         return result;
     }
@@ -152,10 +152,10 @@ public class Store {
                 return false;
         } else if (!password.equals(other.password))
             return false;
-        if (documento == null) {
-            if (other.documento != null)
+        if (document == null) {
+            if (other.document != null)
                 return false;
-        } else if (!documento.equals(other.documento))
+        } else if (!document.equals(other.document))
             return false;
         if (address == null) {
             if (other.address != null)

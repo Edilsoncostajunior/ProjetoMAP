@@ -20,32 +20,33 @@ import com.grupo4.models.Store;
 // FORA A EQUIPE 4 MESMO SE DEUS FALAR COM VOCÊ PESSOALMENTE, NUNCA TOQUE NESSE CÓDIGO
 public class DatabaseStorage {
     private static final String CLIENTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/clients.json";
-    private static final String PRODUCTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/products/Products.json";
+    private static final String PRODUCTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/Product.json";
     private static final String STORE_DATABASE_PATH = "./src/main/java/com/grupo4/database/store.json";
 
     private static JSONArray initializationFiles(String path) {
         try {
             String jsonString = new String(Files.readAllBytes(Paths.get(path)));
 
-            if (jsonString.isEmpty())
-                return null;
-
             return (JSONArray) new JSONParser().parse(jsonString);
         } catch (ParseException e) {
             System.err
                     .println(String.format("Ocorreu um erro na formatação do arquivo (messagem: %s)", e.getMessage()));
+            return new JSONArray();
         } catch (IOException e) {
             System.err
                     .println(String.format("Ocorreu um erro na leitura do arquivo (messagem: %s)", e.getMessage()));
+            return null;
+
         }
 
-        return null;
     }
 
     public static List<Client> creatingClientList() {
         JSONArray jsonList = initializationFiles(CLIENTS_DATABASE_PATH);
 
-        if (jsonList == null || jsonList.isEmpty())
+        if (jsonList == null)
+            return null;
+        if (jsonList.isEmpty())
             return new ArrayList<Client>();
 
         List<Client> returnList = new ArrayList<>();
@@ -83,7 +84,9 @@ public class DatabaseStorage {
     public static List<Store> creatingStoreList() {
         JSONArray jsonList = initializationFiles(STORE_DATABASE_PATH);
 
-        if (jsonList == null || jsonList.isEmpty())
+        if (jsonList == null)
+            return null;
+        if (jsonList.isEmpty())
             return new ArrayList<Store>();
 
         List<Store> returnList = new ArrayList<>();
@@ -106,7 +109,7 @@ public class DatabaseStorage {
             }
 
             FileWriter file = new FileWriter(STORE_DATABASE_PATH);
-            
+
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
@@ -121,7 +124,9 @@ public class DatabaseStorage {
     public static List<Product> creatingProductList(String store_id) {
         JSONArray jsonList = initializationFiles(PRODUCTS_DATABASE_PATH);
 
-        if (jsonList == null || jsonList.isEmpty())
+        if (jsonList == null)
+            return null;
+        if (jsonList.isEmpty())
             return new ArrayList<Product>();
 
         List<Product> returnList = new ArrayList<>();

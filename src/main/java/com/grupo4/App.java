@@ -4,11 +4,10 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
-import com.grupo4.controllers.StoreController;
 
 public class App {
     public static void main(String[] args) throws IOException, ParseException {
-        StoreController controller = new StoreController();
+        // StoreController controller = new StoreController();
         // Map<String, String> map = Stream.of(new String[][] {
         // { "id", "0" },
         // { "name", "Joao" },

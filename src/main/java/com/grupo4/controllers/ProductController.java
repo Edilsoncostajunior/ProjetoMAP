@@ -8,24 +8,27 @@ import com.grupo4.config.DatabaseStorage;
 import com.grupo4.models.Product;
 
 public class ProductController {
-    private List<Product> stores;
+    private List<Product> products;
 
     public ProductController(String store_id) {
-        this.stores = DatabaseStorage.creatingProductList(store_id);
+        this.products = DatabaseStorage.creatingProductList(store_id);
     }
 
     public List<Product> read() {
-        return stores;
+        return products;
     }
 
-    public void write(Product store) {
-        stores.add(store);
-        DatabaseStorage.writtingProductFile(stores);
+    public void write(String brand, String description, String category, String name, double price,
+            int quantity) {
+        String id = "" + Integer.parseInt(
+                products.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get().getId()) + 1;
+        products.add(new Product(id, brand, description, category, name, price, quantity));
+        DatabaseStorage.writtingProductFile(products);
     }
 
     public void update(Map<String, String> changes) {
-        int client_index = IntStream.range(0, stores.size())
-                .filter(i -> stores.get(i).getId().equals(changes.get("id")))
+        int client_index = IntStream.range(0, products.size())
+                .filter(i -> products.get(i).getId().equals(changes.get("id")))
                 .findFirst()
                 .orElse(-1);
 
@@ -34,12 +37,12 @@ public class ProductController {
             return;
         }
 
-        stores.get(client_index).valuesProduct(changes);
-        DatabaseStorage.writtingProductFile(stores);
+        products.get(client_index).update(changes);
+        DatabaseStorage.writtingProductFile(products);
     }
 
     public void remove(String id) {
-        stores = stores.stream().filter(value -> !value.getId().equals(id)).toList();
-        DatabaseStorage.writtingProductFile(stores);
+        products = products.stream().filter(value -> !value.getId().equals(id)).toList();
+        DatabaseStorage.writtingProductFile(products);
     }
 }

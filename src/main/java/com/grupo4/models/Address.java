@@ -14,13 +14,6 @@ public class Address {
     private String state;
     private String country;
 
-    public Address() {
-    }
-
-    public Address(Map<String, String> mapping) {
-        this.valuesAddress(mapping);
-    }
-
     public Address(String street, String house_number, String neighbourhood, String postal_code, String city,
             String state, String country) {
         this.street = street;
@@ -56,7 +49,7 @@ public class Address {
         return new JSONObject(map);
     }
 
-    public void valuesAddress(Map<String, String> changes) {
+    public void updateAddress(Map<String, String> changes) {
         if (changes.containsKey("street"))
             this.street = changes.get("street");
         if (changes.containsKey("house_number"))

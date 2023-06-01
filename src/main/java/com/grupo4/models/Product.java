@@ -31,8 +31,8 @@ public class Product {
         this.description = (String) json.get("description");
         this.category = (String) json.get("category");
         this.name = (String) json.get("name");
-        this.price = (Double) json.get("price");
-        this.quantity = (int) json.get("quantity");
+        this.price = (double) json.get("price");
+        this.quantity = ((Long) json.get("quantity")).intValue();
 
     }
 
@@ -50,7 +50,7 @@ public class Product {
         return new JSONObject(map);
     }
 
-    public void valuesProduct(Map<String, String> changes) {
+    public void update(Map<String, String> changes) {
         if (changes.size() == 0)
             return;
 

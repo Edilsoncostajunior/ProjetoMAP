@@ -34,7 +34,7 @@ public class ClientController {
     }
 
     public Client client_GET_BY_CPF(String cpf) {
-        return clients.stream().filter(value -> value.getCpf().equals(cpf)).findFirst().get();
+        return clients.stream().filter(value -> value.getDocument().equals(cpf)).findFirst().get();
     }
 
     public String client_PATCH(Map<String, String> changes) {
@@ -42,7 +42,7 @@ public class ClientController {
                 .filter(i -> clients.get(i).getId().equals(changes.get("id")))
                 .findFirst()
                 .orElse(-1);
-        clients.get(client_index).valuesClient(changes);
+        clients.get(client_index).update(changes);
         DatabaseStorage.writtingClientFile(clients);
         return "Finalizado com sucesso as alterações no cliente!";
     }
@@ -50,10 +50,10 @@ public class ClientController {
     public String client_POST(String name, String cpf, String email, String password, String street,
             String house_number, String neighbourhood, String postal_code, String city,
             String state, String country) {
-        int id = Integer.parseInt(
+        String id = "" + Integer.parseInt(
                 clients.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get().getId()) + 1;
         clients.add(
-                new Client(id + "", name, cpf, email, password, street, house_number, neighbourhood, postal_code, city,
+                new Client(id, name, cpf, email, password, street, house_number, neighbourhood, postal_code, city,
                         state, country));
         DatabaseStorage.writtingClientFile(clients);
         return "Finalizado com sucesso o novo cliente foi adicionado com sucesso!";
