@@ -1,1 +1,18 @@
-[{"name":"Caio henrique","password":"21312421421412","address":{"country":null,"city":"Campo Grande","street":"Rua carnilo silva","neighbourhood":"Caramelo","house_number":"709","state":"Sao Paulo","postal_code":"58414-140"},"id":"0","email":"asdasdsa@gmail.com","document":"088.722.665-12"},{"name":"CH","password":"senha123","address":{"country":"brasil","city":"Cg","street":"rua cc","neighbourhood":"Bairro c","house_number":"69","state":"Pb","postal_code":"58431-070"},"id":"11","email":"Ch@email.com","document":"987.654.321-00"},{"name":"CH","password":"senha123","address":{"country":"brasil","city":"Cg","street":"rua cc","neighbourhood":"Bairro c","house_number":"69","state":"Pb","postal_code":"58431-070"},"id":"111","email":"Ch@email.com","document":"987.654.321-00"},{"name":"CH","password":"senha123","address":{"country":"brasil","city":"Cg","street":"rua cc","neighbourhood":"Bairro c","house_number":"69","state":"Pb","postal_code":"58431-070"},"id":"1111","email":"Ch@email.com","document":"987.654.321-00"},{"name":"CH","password":"senha123","address":{"country":"brasil","city":"Cg","street":"rua cc","neighbourhood":"Bairro c","house_number":"69","state":"Pb","postal_code":"58431-070"},"id":"11111","email":"Ch@email.com","document":"987.654.321-00"},{"name":"CH","password":"senha123","address":{"country":"brasil","city":"Cg","street":"rua cc","neighbourhood":"Bairro c","house_number":"69","state":"Pb","postal_code":"58431-070"},"id":"111111","email":"Ch@email.com","document":"987.654.321-00"}]
+[
+    {
+        "password": "21312421421412",
+        "address": {
+            "country": null,
+            "city": "Campo Grande",
+            "street": "Rua carnilo silva",
+            "neighbourhood": "Caramelo",
+            "house_number": "709",
+            "state": "Sao Paulo",
+            "postal_code": "58414-140"
+        },
+        "document": "088.722.665-12",
+        "name": "Caio henrique",
+        "id": "0",
+        "email": "asdasdsa@gmail.com"
+    }
+]

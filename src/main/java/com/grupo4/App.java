@@ -4,6 +4,8 @@ import java.io.IOException;
 
 import org.json.simple.parser.ParseException;
 
+import com.grupo4.controllers.ProductController;
+
 
 public class App {
     public static void main(String[] args) throws IOException, ParseException {
@@ -18,5 +20,9 @@ public class App {
         // "null");
         // controller.client_PATCH(map);
         // controller.client_DELETE("2");
+
+        //ProductController productController = new ProductController();
+        //productController.product_POST("O boticario", "Perfume ", "Cosmeticos", "Secrets", 150.00, 10);
+        //productController.product_POST("null", "null", "null", "null", 0, 0);
     }
 }

@@ -36,7 +36,7 @@ public class DatabaseStorageTest {
     @Test
     @DisplayName("Getting all products present in the json file")
     public void gettingAllProductsFromJsonFile() {
-        Assertions.assertNotNull(DatabaseStorage.creatingProductList(""));
+        Assertions.assertNotNull(DatabaseStorage.creatingProductList());
     }
 
     @Test

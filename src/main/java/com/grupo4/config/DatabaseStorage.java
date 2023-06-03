@@ -121,7 +121,7 @@ public class DatabaseStorage {
         }
     }
 
-    public static List<Product> creatingProductList(String store_id) {
+    public static List<Product> creatingProductList() {
         JSONArray jsonList = initializationFiles(PRODUCTS_DATABASE_PATH);
 
         if (jsonList == null)
@@ -148,7 +148,7 @@ public class DatabaseStorage {
                 jsonArray.add(product.transformToJsonObject());
             }
 
-            FileWriter file = new FileWriter(STORE_DATABASE_PATH);
+            FileWriter file = new FileWriter(PRODUCTS_DATABASE_PATH);
 
             file.write(jsonArray.toJSONString());
             file.flush();
