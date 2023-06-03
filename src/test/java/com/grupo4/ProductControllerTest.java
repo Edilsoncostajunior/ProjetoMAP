@@ -1,7 +1,6 @@
 package com.grupo4;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.util.HashMap;
 import java.util.List;
@@ -75,7 +74,7 @@ public class ProductControllerTest {
 
     @Test
     public void testProduct_DELETE() {
-        productController.product_DELETE("1");
+        productController.product_DELETE("3");
         List<Product> Products = productController.product_GET_ALL();
         Assertions.assertNotNull(Products);
     }

@@ -1,1 +1,29 @@
-[{"quantity":1,"price":1.1,"name":"jsonText","description":"jsonText","id":"0","category":"jsonText","brand":"jsonText"},{"quantity":1,"price":1.25,"name":"jsonText","description":"jsonText","id":"1","category":"jsonText","brand":"jsonText"},{"quantity":10,"price":150.0,"name":"Secrets","description":"Perfume ","id":"11","category":"Cosmeticos","brand":"O boticario"}]
+[
+    {
+        "quantity": 1,
+        "price": 1.1,
+        "name": "jsonText",
+        "description": "jsonText",
+        "id": "0",
+        "category": "jsonText",
+        "brand": "jsonText"
+    },
+    {
+        "quantity": 1,
+        "price": 1.25,
+        "name": "jsonText",
+        "description": "jsonText",
+        "id": "1",
+        "category": "jsonText",
+        "brand": "jsonText"
+    },
+    {
+        "quantity": 10,
+        "price": 150.0,
+        "name": "Secrets",
+        "description": "Perfume ",
+        "id": "11",
+        "category": "Cosmeticos",
+        "brand": "O boticario"
+    }
+]
