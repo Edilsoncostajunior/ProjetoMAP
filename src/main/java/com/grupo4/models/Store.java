@@ -12,9 +12,10 @@ public class Store {
     private String document;
     private Address address;
 
-    public Store(String name, String email, String password, String document, String street, String house_number,
+    public Store(String id, String name, String email, String password, String document, String street, String house_number,
             String neighbourhood, String postal_code, String city,
             String state, String country) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;

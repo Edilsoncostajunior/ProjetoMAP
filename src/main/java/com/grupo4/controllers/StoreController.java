@@ -22,7 +22,12 @@ public class StoreController {
     public void write(String name, String email, String password, String documento, String street, String house_number,
             String neighbourhood, String postal_code, String city, String state, String country) {
         if (isUniquedocumento(documento)) {
-            stores.add(new Store(name, email, password, documento, street, house_number, neighbourhood, postal_code,
+            String id = stores.size() == 0 ? "0"
+                    : "" + Integer.parseInt(
+                            stores.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get()
+                                    .getId())
+                            + 1;
+            stores.add(new Store(id, name, email, password, documento, street, house_number, neighbourhood, postal_code,
                     city, state, country));
             DatabaseStorage.writtingStoreFile(stores);
         } else {

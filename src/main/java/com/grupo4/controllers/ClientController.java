@@ -50,7 +50,7 @@ public class ClientController {
     public String client_POST(String name, String cpf, String email, String password, String street,
             String house_number, String neighbourhood, String postal_code, String city,
             String state, String country) {
-        String id = "" + Integer.parseInt(
+        String id = clients.size() == 0 ? "0" : "" + Integer.parseInt(
                 clients.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get().getId()) + 1;
         clients.add(
                 new Client(id, name, cpf, email, password, street, house_number, neighbourhood, postal_code, city,

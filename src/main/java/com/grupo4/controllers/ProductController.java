@@ -20,7 +20,7 @@ public class ProductController {
 
     public void write(String brand, String description, String category, String name, double price,
             int quantity) {
-        String id = "" + Integer.parseInt(
+        String id = products.size() == 0 ? "0" : "" + Integer.parseInt(
                 products.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get().getId()) + 1;
         products.add(new Product(id, brand, description, category, name, price, quantity));
         DatabaseStorage.writtingProductFile(products);
