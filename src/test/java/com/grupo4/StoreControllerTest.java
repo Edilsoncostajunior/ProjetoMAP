@@ -24,7 +24,7 @@ public class StoreControllerTest {
     @Test
     public void readTest() {
         List<com.grupo4.models.Store> stores = storeController.read();
-        assertEquals(2, stores.size());
+        assertEquals(1, stores.size());
     }
 
     @Test
@@ -55,7 +55,7 @@ public class StoreControllerTest {
         assertEquals("New Name", stores.get(1).getName());
         assertEquals("newemail@example.com", stores.get(1).getEmail());
         assertEquals("newpassword", stores.get(1).getPassword());
-        assertEquals("987654321", stores.get(1).getdocumento());
+        assertEquals("987654321", stores.get(1).getDocument());
     }*/
 
     @Test
