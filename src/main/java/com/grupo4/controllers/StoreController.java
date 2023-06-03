@@ -29,9 +29,12 @@ public class StoreController {
                             + 1;
             stores.add(new Store(id, name, email, password, documento, street, house_number, neighbourhood, postal_code,
                     city, state, country));
-            DatabaseStorage.writtingStoreFile(stores);
-        } else {
-            System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
+            if (isUniquedocumento(documento)) {
+                DatabaseStorage.writtingStoreFile(stores);
+            } else {
+                System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
+            }
+
         }
     }
 
