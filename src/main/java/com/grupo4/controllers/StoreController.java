@@ -19,21 +19,23 @@ public class StoreController {
         return stores;
     }
 
+    public Store read_by_id(String id) {
+        return stores.stream().filter(value -> value.getId().equals(id)).findFirst().get();
+    }
+
     public void write(String name, String email, String password, String documento, String street, String house_number,
             String neighbourhood, String postal_code, String city, String state, String country) {
-        if (isUniquedocumento(documento)) {
+        if (isUniquedocumento(documento, "")) {
             String id = String.valueOf(stores.stream()
                     .mapToInt(p -> Integer.parseInt(p.getId()))
                     .max()
                     .orElse(0) + 1);
             stores.add(new Store(id, name, email, password, documento, street, house_number, neighbourhood, postal_code,
                     city, state, country));
-            if (isUniquedocumento(documento)) {
-                DatabaseStorage.writtingStoreFile(stores);
-            } else {
-                System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
-            }
+            DatabaseStorage.writtingStoreFile(stores);
 
+        } else {
+            System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
         }
     }
 
@@ -48,7 +50,7 @@ public class StoreController {
             return;
         }
 
-        if (isUniquedocumento(stores.get(client_index).getDocument())) {
+        if (changes.get("document") == null || isUniquedocumento(changes.get("document"), changes.get("id"))) {
             stores.get(client_index).update(changes);
             DatabaseStorage.writtingStoreFile(stores);
         } else {
@@ -61,9 +63,13 @@ public class StoreController {
         DatabaseStorage.writtingStoreFile(stores);
     }
 
-    public boolean isUniquedocumento(String store_comp) {
+    public boolean isUniquedocumento(String store_comp, String id) {
+        if (stores.size() == 0) {
+            return true;
+        }
+
         for (Store store : stores) {
-            if (store_comp.equals(store.getDocument())) {
+            if (store_comp.equals(store.getDocument()) && !store.getId().equals(id)) {
                 return false;
             }
         }

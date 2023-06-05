@@ -50,8 +50,10 @@ public class ClientController {
     public String client_POST(String name, String cpf, String email, String password, String street,
             String house_number, String neighbourhood, String postal_code, String city,
             String state, String country) {
-        String id = clients.size() == 0 ? "0" : "" + Integer.parseInt(
-                clients.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get().getId()) + 1;
+        String id = clients.size() == 0 ? "0"
+                : "" + (Integer.parseInt(
+                        clients.stream().max((comp1, comp2) -> comp1.getId().compareTo(comp2.getId())).get().getId())
+                        + 1);
         clients.add(
                 new Client(id, name, cpf, email, password, street, house_number, neighbourhood, postal_code, city,
                         state, country));
@@ -60,7 +62,10 @@ public class ClientController {
     }
 
     public String client_DELETE(String id) {
+        this.client_GET_BY_ID(id);
+        
         clients = clients.stream().filter(value -> !value.getId().equals(id)).toList();
+
         DatabaseStorage.writtingClientFile(clients);
 
         return "Finalizado com sucesso o cliente foi deletado com sucesso!";

@@ -1,13 +1,11 @@
 package com.grupo4;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -16,26 +14,17 @@ import com.grupo4.controllers.ClientController;
 import com.grupo4.models.Client;
 
 public class ClientControllerTest {
-
-    JSONObject json = new JSONObject();
-
-    public void testClient() {
-
-        Client client = new Client("1", "Caio", "12345678901", "caio@email.com", "senha111", "rua 2", "5", "33", "44",
-                "CG", "PB", "BR");
-        assertEquals("caio@email.com", client.getEmail());
-    }
-
-    private ClientController clientController;
+    private ClientController clientController = new ClientController();
 
     @Before
     public void setUp() {
-        clientController = new ClientController();
+        clientController.client_POST("Caio", "12345678901", "caio@email.com", "senha111", "rua 2", "5", "33", "44",
+                "CG", "PB", "BR");
     }
 
     @Test
     public void testClient_LOGIN() {
-        assertFalse(clientController.client_LOGIN("caio@email.com", "senha111"));
+        Assertions.assertTrue(clientController.client_LOGIN("caio@email.com", "senha111"));
     }
 
     @Test
@@ -46,32 +35,35 @@ public class ClientControllerTest {
 
     @Test
     public void testClient_GET_BY_ID() {
-        Client client = clientController.client_GET_BY_ID("0");
-        assertEquals("Caio henrique", client.getName());
+        Client client = clientController
+                .client_GET_BY_ID(clientController.client_GET_ALL().stream().findFirst().get().getId());
+        Assertions.assertNotNull(client);
     }
 
     @Test
     public void testClient_GET_BY_NAME() {
-        Client client = clientController.client_GET_BY_NAME("Caio henrique");
-        assertEquals("asdasdsa@gmail.com", client.getEmail());
+        Client client = clientController.client_GET_BY_NAME("Caio");
+        Assertions.assertNotNull(client);
+
     }
 
     @Test
     public void testClient_GET_BY_CPF() {
-        Client client = clientController.client_GET_BY_CPF("088.722.665-12");
-        assertEquals("asdasdsa@gmail.com", client.getEmail());
+        Client client = clientController.client_GET_BY_CPF("12345678901");
+        Assertions.assertNotNull(client);
     }
 
     @Test
     public void testClient_PATCH() {
         Map<String, String> changes = new HashMap<>();
-        changes.put("id", "0");
+        String id = clientController.client_GET_ALL().stream().findFirst().get().getId();
+        changes.put("id", id);
         changes.put("name", "Caio henrique");
 
         String result = clientController.client_PATCH(changes);
         assertEquals("Finalizado com sucesso as alterações no cliente!", result);
 
-        Client client = clientController.client_GET_BY_ID("0");
+        Client client = clientController.client_GET_BY_ID(id);
         assertEquals("Caio henrique", client.getName());
     }
 
@@ -99,10 +91,8 @@ public class ClientControllerTest {
 
     @Test
     public void testClient_DELETE() {
-        String result = clientController.client_DELETE("1");
+        String result = clientController
+                .client_DELETE(clientController.client_GET_ALL().stream().findFirst().get().getId());
         assertEquals("Finalizado com sucesso o cliente foi deletado com sucesso!", result);
-
-        List<Client> clients = clientController.client_GET_ALL();
-        Assertions.assertNotNull(clients);
     }
 }

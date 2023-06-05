@@ -12,7 +12,8 @@ public class Store {
     private String document;
     private Address address;
 
-    public Store(String id, String name, String email, String password, String document, String street, String house_number,
+    public Store(String id, String name, String email, String password, String document, String street,
+            String house_number,
             String neighbourhood, String postal_code, String city,
             String state, String country) {
         this.id = id;
@@ -63,8 +64,13 @@ public class Store {
 
     @Override
     public String toString() {
-        return "Store [name=" + name + ", email=" + email + ", password=" + password + ", document=" + document
-                + ", address=" + address + "]";
+        String returnMessage = "id :" + this.id + "\n";
+        returnMessage += "name :" + this.name + "\n";
+        returnMessage += "document :" + this.document + "\n";
+        returnMessage += "email :" + this.email + "\n";
+        returnMessage += "password :" + this.password + "\n";
+        returnMessage += "address :" + this.address.toString() + "\n";
+        return returnMessage;
     }
 
     public String getId() {

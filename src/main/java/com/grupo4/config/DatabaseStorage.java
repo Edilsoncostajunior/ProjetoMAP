@@ -17,7 +17,6 @@ import com.grupo4.models.Client;
 import com.grupo4.models.Product;
 import com.grupo4.models.Store;
 
-// FORA A EQUIPE 4 MESMO SE DEUS FALAR COM VOCÊ PESSOALMENTE, NUNCA TOQUE NESSE CÓDIGO
 public class DatabaseStorage {
     private static final String CLIENTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/clients.json";
     private static final String PRODUCTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/Product.json";

@@ -28,7 +28,7 @@ public class ProductController {
 
     public void product_POST(String brand, String description, String category, String name, double price,
             int quantity) {
-        String id = String.valueOf(products.stream()
+        String id = products.size() == 0 ? "0" : String.valueOf(products.stream()
         .mapToInt(p -> Integer.parseInt(p.getId()))
         .max()
         .orElse(0) + 1);

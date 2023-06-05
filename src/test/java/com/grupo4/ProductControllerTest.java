@@ -40,8 +40,9 @@ public class ProductControllerTest {
 
     @Test
     public void testProduct_GET_BY_ID() {
-        Product Product = productController.product_GET_BY_ID("2");
-        assertEquals("2", Product.getId());
+        String id = productController.product_GET_ALL().stream().findAny().get().getId();
+        Product Product = productController.product_GET_BY_ID(id);
+        assertEquals(id, Product.getId());
 
     }
 

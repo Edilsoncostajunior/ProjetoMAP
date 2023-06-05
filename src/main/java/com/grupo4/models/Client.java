@@ -104,9 +104,13 @@ public class Client {
 
     @Override
     public String toString() {
-        return "Client [name=" + name + ", document=" + document + ", email=" + email + ", password=" + password
-                + ", address="
-                + address + "]";
+        String returnMessage = "id :" + this.id + "\n";
+        returnMessage += "name :" + this.name + "\n";
+        returnMessage += "document :" + this.document + "\n";
+        returnMessage += "email :" + this.email + "\n";
+        returnMessage += "password :" + this.password + "\n";
+        returnMessage += "address :" + this.address.toString() + "\n";
+        return returnMessage;
     }
 
     public String getId() {

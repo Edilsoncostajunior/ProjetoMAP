@@ -120,12 +120,18 @@ public class Address {
 
     public void setCountry(String country) {
         this.country = country;
-    } 
+    }
 
     @Override
     public String toString() {
-        return "Address [street=" + street + ", house_number=" + house_number + ", neighbourhood=" + neighbourhood
-                + ", postal_code=" + postal_code + ", city=" + city + ", state=" + state + ", country=" + country + "]";
+        String returnMessage = "street :" + this.street + "\n";
+        returnMessage += "house_number :" + this.house_number + "\n";
+        returnMessage += "neighbourhood :" + this.neighbourhood + "\n";
+        returnMessage += "postal_code :" + this.postal_code + "\n";
+        returnMessage += "city :" + this.city + "\n";
+        returnMessage += "state :" + this.state + "\n";
+        returnMessage += "country :" + this.country + "\n";
+        return returnMessage;
     }
 
 }

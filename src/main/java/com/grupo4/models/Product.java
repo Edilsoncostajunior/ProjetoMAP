@@ -126,7 +126,13 @@ public class Product {
 
     @Override
     public String toString() {
-        return "Product [id=" + id + ", brand=" + brand + ", description=" + description + ", category=" + category
-                + ", name=" + name + ", price=" + price + ", quantity=" + quantity + "]";
+        String returnMessage = "id :" + this.id + "\n";
+        returnMessage += "brand :" + this.brand + "\n";
+        returnMessage += "description :" + this.description + "\n";
+        returnMessage += "category :" + this.category + "\n";
+        returnMessage += "name :" + this.name + "\n";
+        returnMessage += "price :" + this.price + "\n";
+        returnMessage += "quantity :" + this.quantity + "\n";
+        return returnMessage;
     }
 }
