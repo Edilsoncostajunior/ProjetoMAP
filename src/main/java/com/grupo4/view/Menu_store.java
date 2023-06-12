@@ -48,7 +48,7 @@ public class Menu_store implements Menu_options, Runnable {
 
     @Override
     public void option_get_all() {
-        System.out.println("-----------  clientes ----------");
+        System.out.println("-----------  lojas ----------");
 
         List<Store> stores = controller.read();
 

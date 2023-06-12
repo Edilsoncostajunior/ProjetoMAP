@@ -37,7 +37,7 @@ public class Menu_product implements Menu_options, Runnable {
 
     @Override
     public void option_get_all() {
-        System.out.println("-----------  clientes ----------");
+        System.out.println("-----------  produtos ----------");
 
         List<Product> products = controller.product_GET_ALL();
 
