@@ -1,5 +1,9 @@
 package com.grupo4.view;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -8,6 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.grupo4.controllers.StoreController;
+import com.grupo4.controllers.Store_ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.error.NullReadableValuesToWriteException;
@@ -17,6 +22,7 @@ import com.grupo4.view.interfaceModel.Menu_options;
 public class Menu_store implements Menu_options, Runnable {
     private boolean isRunning = true;
     private StoreController controller;
+    private Store_ProductController controller1;
     private Scanner getScan;
 
     private List<String> options;
@@ -24,13 +30,15 @@ public class Menu_store implements Menu_options, Runnable {
 
     private Menu_store() {
         controller = new StoreController();
+        controller1 = new Store_ProductController();
         options = Arrays.asList(
                 "0 - mostrar todos as lojas",
                 "1 - mostrar loja específica por id",
                 "2 - criar nova loja",
                 "3 - atualizar loja",
                 "4 - deletar loja",
-                "5 - sair");
+                "5 - produtos da loja",
+                "6 - sair");
 
         post = Arrays.asList(
                 "name",
@@ -263,6 +271,27 @@ public class Menu_store implements Menu_options, Runnable {
                         option_delete();
                         break;
                     case 5:
+                        // boolean isRunningOption = true;
+                        // while (isRunningOption) {
+                        // System.out.print("Digite o numero do id da loja: ");
+                        // int storeId = getScan.nextInt();
+                        // getScan.nextLine();
+
+                        // get_id_for_products();
+
+                        // // chama a função teste do Store_ProductController
+                        // controller1.teste(storeId);
+
+                        // System.out.print("Deseja continuar na opção 5 (S ou N): ");
+                        // String again = getScan.nextLine().toUpperCase();
+                        // if (!again.equals("S")) {
+                        // isRunningOption = false;
+                        // }
+                        // }
+                        get_id_for_store_products();
+                        break;
+
+                    case 6:
                         isRunning = false;
                     default:
                         throw new InexistentSelectOptionException();
@@ -274,6 +303,70 @@ public class Menu_store implements Menu_options, Runnable {
 
         isRunning = true;
     }
+
+    // Organizar em outros arquivos esses códigos depois...
+
+    public void get_id_for_store_products() {
+        boolean isRunningOption = true;
+
+        if (controller.read().size() == 0) {
+            System.out.println("Não existe lojas cadastradas!\n");
+            return;
+        }
+
+        while (isRunningOption) {
+            System.out.print("Digite o numero do id da loja: ");
+
+            int id = getScan.nextInt();
+            getScan.nextLine();
+
+            try {
+                get_products_store(id);
+                System.out.println(controller.read_by_id("" + id).toString());
+            } catch (NoSuchElementException e) {
+                System.out.println("Id não encontrado!");
+
+                boolean isRunningForContinue = true;
+                while (isRunningForContinue) {
+                    System.out.print("Deseja continuar (S ou N): ");
+
+                    String again = getScan.next();
+                    getScan.nextLine();
+
+                    if (again.equals("N")) {
+                        isRunningForContinue = false;
+                        isRunningOption = false;
+                    } else if (again.equals("S")) {
+                        isRunningForContinue = false;
+                    }
+                }
+            }
+            isRunningOption = false;
+        }
+    }
+
+    public void get_products_store(int id) {
+
+        File arquivo = new File("./src/main/java/com/grupo4/controllers/Store_Products/" + id + ".json");
+
+        if (arquivo.exists()) {
+            System.out.println("arquivo existe");
+            return;
+        }
+
+        try {
+            arquivo.createNewFile();
+            // faça algo com o conteúdo do arquivo
+        } catch (NoSuchElementException | IOException e) {
+            // tratamento de erro
+        }
+
+    }
+
+    /*
+     * -----------------------------------------------------------------------------
+     * ---------------
+     */
 
     public static Menu_store init() {
         return new Menu_store();
