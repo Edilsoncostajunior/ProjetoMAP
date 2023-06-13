@@ -20,7 +20,7 @@ public class ProductControllerTest {
 
     JSONObject json = new JSONObject();
 
-    public void testProduct() {
+    public void testProductIfEquals() {
         Product Product = new Product("1","O boticario", "Perfume ", "Cosmeticos", "Secrets", 150.00, 10);
         assertEquals("1", Product.getId());
     }
@@ -33,13 +33,13 @@ public class ProductControllerTest {
 
 
     @Test
-    public void testProduct_GET_ALL() {
+    public void testProductGetAllIfNotNull() {
         List<Product> Products = productController.product_GET_ALL();
         Assertions.assertNotNull(Products);
     }
 
     @Test
-    public void testProduct_GET_BY_ID() {
+    public void testProductGetByIdIfEquals() {
         String id = productController.product_GET_ALL().stream().findAny().get().getId();
         Product Product = productController.product_GET_BY_ID(id);
         assertEquals(id, Product.getId());
@@ -47,7 +47,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testProduct_PATCH() {
+    public void testProductPatchIfEquals() {
         Map<String, String> changes = new HashMap<>();
         changes.put("id", "0");
         changes.put("name", "patch test");
@@ -59,7 +59,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testProduct_POST() {
+    public void testProductPostIfEquals() {
         String brand = "Avon";
         String description = "Perfume da Avon";
         String category= "Perfumes";
@@ -74,7 +74,7 @@ public class ProductControllerTest {
     }
 
     @Test
-    public void testProduct_DELETE() {
+    public void testProductDeleteIfNotNull() {
         productController.product_DELETE("3");
         List<Product> Products = productController.product_GET_ALL();
         Assertions.assertNotNull(Products);

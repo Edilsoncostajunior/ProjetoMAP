@@ -25,13 +25,13 @@ public class StoreControllerTest {
     }
 
     @Test
-    public void readTest() {
+    public void readTestIfTrue() {
         List<Store> stores = storeController.read();
         Assertions.assertTrue(stores.size() >= 0);
     }
 
     @Test
-    public void writeTest() {
+    public void writeTestIfTrue() {
         int size = storeController.read().size();
         storeController.write("New Store", "newstore@example.com", "password", "1321321", "123 Main St",
                 "42", "Downtown", "12345", "Anytown", "ST", "US");
@@ -40,7 +40,7 @@ public class StoreControllerTest {
     }
 
     @Test
-    public void updateTest() {
+    public void updateTestIfEquals() {
         Map<String, String> changes = new HashMap<>();
         String id = storeController.read().stream().findFirst().get().getId();
         changes.put("id", id);
@@ -63,7 +63,7 @@ public class StoreControllerTest {
     }
 
     @Test
-    public void removeTest() {
+    public void removeTestIfTrue() {
         int size = storeController.read().size();
         String id = storeController.read().stream().findFirst().get().getId();
         storeController.remove(id);
@@ -73,7 +73,7 @@ public class StoreControllerTest {
     }
 
     @Test
-    public void isUniquedocumentoTest() {
+    public void isUniquedocumentoTestIfTrue() {
         assertTrue(storeController.isUniquedocumento("1", ""));
     }
 }
