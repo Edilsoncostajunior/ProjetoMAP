@@ -9,9 +9,11 @@ import com.grupo4.models.Product;
 
 public class Store_ProductController {
     private List<Product> products;
+    private String arquivo;
 
     public Store_ProductController(String arquivo) {
         this.products = DatabaseStorage.creatingStoreProductList(arquivo);
+        this.arquivo = arquivo;
     }
 
     public List<Product> product_GET_ALL() {
@@ -33,7 +35,7 @@ public class Store_ProductController {
         .max()
         .orElse(0) + 1);
         products.add(new Product(id, brand, description, category, name, price, quantity));
-        DatabaseStorage.writtingStoreProductFile(products);
+        DatabaseStorage.writtingStoreProductFile(products, arquivo);
     }
 
     public void product_PATCH(Map<String, String> changes) {
@@ -48,11 +50,11 @@ public class Store_ProductController {
         }
 
         products.get(product_index).update(changes);
-        DatabaseStorage.writtingStoreProductFile(products);
+        DatabaseStorage.writtingStoreProductFile(products, arquivo);
     }
 
     public void product_DELETE(String id) {
         products = products.stream().filter(value -> !value.getId().equals(id)).toList();
-        DatabaseStorage.writtingStoreProductFile(products);
+        DatabaseStorage.writtingStoreProductFile(products, arquivo);
     }
 }

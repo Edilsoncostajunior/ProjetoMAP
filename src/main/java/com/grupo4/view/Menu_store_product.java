@@ -21,8 +21,8 @@ public class Menu_store_product implements Menu_options, Runnable {
     private List<String> options;
     private List<String> post;
 
-    private Menu_store_product() {
-        controller = new Store_ProductController();
+    private Menu_store_product(String arquivo) {
+        controller = new Store_ProductController(arquivo);
         options = Arrays.asList(
                 "0 - mostrar todos os produtos",
                 "1 - mostrar produtos específico por id",
@@ -257,8 +257,8 @@ public class Menu_store_product implements Menu_options, Runnable {
         isRunning = true;
     }
 
-    public static Menu_product init() {
-        return new Menu_product();
+    public static Menu_store_product init(String arquivo) {
+        return new Menu_store_product(arquivo);
     }
 
 }

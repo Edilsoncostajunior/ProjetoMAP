@@ -12,7 +12,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.grupo4.controllers.StoreController;
-import com.grupo4.controllers.Store_ProductController;
+//import com.grupo4.controllers.Store_ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.error.NullReadableValuesToWriteException;
@@ -22,7 +22,9 @@ import com.grupo4.view.interfaceModel.Menu_options;
 public class Menu_store implements Menu_options, Runnable {
     private boolean isRunning = true;
     private StoreController controller;
-    private Store_ProductController controller1;
+    private Menu_store_product menu;
+    // private Menu_product menu_product;
+    // private Store_ProductController controller1;
     private Scanner getScan;
 
     private List<String> options;
@@ -30,7 +32,9 @@ public class Menu_store implements Menu_options, Runnable {
 
     private Menu_store() {
         controller = new StoreController();
-        controller1 = new Store_ProductController();
+        // menu_product = Menu_product.init();
+        // menu = Menu_store_product()
+        // controller1 = new Store_ProductController();
         options = Arrays.asList(
                 "0 - mostrar todos as lojas",
                 "1 - mostrar loja específica por id",
@@ -271,23 +275,6 @@ public class Menu_store implements Menu_options, Runnable {
                         option_delete();
                         break;
                     case 5:
-                        // boolean isRunningOption = true;
-                        // while (isRunningOption) {
-                        // System.out.print("Digite o numero do id da loja: ");
-                        // int storeId = getScan.nextInt();
-                        // getScan.nextLine();
-
-                        // get_id_for_products();
-
-                        // // chama a função teste do Store_ProductController
-                        // controller1.teste(storeId);
-
-                        // System.out.print("Deseja continuar na opção 5 (S ou N): ");
-                        // String again = getScan.nextLine().toUpperCase();
-                        // if (!again.equals("S")) {
-                        // isRunningOption = false;
-                        // }
-                        // }
                         get_id_for_store_products();
                         break;
 
@@ -321,8 +308,8 @@ public class Menu_store implements Menu_options, Runnable {
             getScan.nextLine();
 
             try {
-                get_products_store(id);
                 System.out.println(controller.read_by_id("" + id).toString());
+                get_file_products_store(id);
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado!");
 
@@ -345,18 +332,19 @@ public class Menu_store implements Menu_options, Runnable {
         }
     }
 
-    public void get_products_store(int id) {
+    public void get_file_products_store(int id) {
 
         File arquivo = new File("./src/main/java/com/grupo4/controllers/Store_Products/" + id + ".json");
-
-        if (arquivo.exists()) {
-            System.out.println("arquivo existe");
-            return;
-        }
+        String auxArquivo = arquivo.getAbsolutePath();
 
         try {
-            arquivo.createNewFile();
-            // faça algo com o conteúdo do arquivo
+            if (arquivo.exists()) {
+                System.out.println("arquivo existe");
+            } else {
+                arquivo.createNewFile();
+            }
+
+            Menu_store_product.init(arquivo.getAbsolutePath()).run();
         } catch (NoSuchElementException | IOException e) {
             // tratamento de erro
         }
