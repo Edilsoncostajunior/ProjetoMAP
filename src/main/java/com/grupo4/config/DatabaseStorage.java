@@ -1,9 +1,9 @@
 package com.grupo4.config;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +13,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import com.grupo4.error.NullReadableValuesToWriteException;
+import com.grupo4.models.CartProduct;
 import com.grupo4.models.Client;
 import com.grupo4.models.Product;
 import com.grupo4.models.Store;
@@ -24,20 +25,122 @@ public class DatabaseStorage {
 
     private static JSONArray initializationFiles(String path) {
         try {
-            String jsonString = new String(Files.readAllBytes(Paths.get(path)));
+            File file = new File(path);
+            file.createNewFile();
+
+            String jsonString = new String(Files.readAllBytes(file.toPath()));
 
             return (JSONArray) new JSONParser().parse(jsonString);
         } catch (ParseException e) {
-            System.err
-                    .println(String.format("Ocorreu um erro na formatação do arquivo (messagem: %s)", e.getMessage()));
             return new JSONArray();
         } catch (IOException e) {
-            System.err
-                    .println(String.format("Ocorreu um erro na leitura do arquivo (messagem: %s)", e.getMessage()));
             return null;
 
         }
+    }
 
+    private static File initializingDir(String dirName) {
+        File file = new File("./src/main/java/com/grupo4" + dirName);
+        file.mkdirs();
+
+        return file;
+    }
+
+    public static List<CartProduct> creatingCartList(String client_id, String store_id) {
+        try {
+            JSONArray jsonList = initializationFiles(
+                    initializingDir("/database/clients/" + client_id).getCanonicalPath()
+                            + "/CartStore_" + store_id + ".json");
+
+            if (jsonList == null)
+                return null;
+            if (jsonList.isEmpty())
+                return new ArrayList<CartProduct>();
+
+            List<CartProduct> returnList = new ArrayList<>();
+
+            for (Object object : jsonList) {
+                returnList.add(new CartProduct((JSONObject) object));
+            }
+
+            return returnList;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void writtingCartFile(List<CartProduct> products, String client_id, String store_id) {
+        try {
+            if (products == null)
+                throw new NullReadableValuesToWriteException();
+
+            JSONArray jsonArray = new JSONArray();
+
+            for (CartProduct product : products) {
+                jsonArray.add(product.transformToJsonObject());
+            }
+
+            FileWriter file = new FileWriter(
+                    initializingDir("/database/clients/" + client_id + "/cart/" + store_id).getCanonicalPath()
+                            + "/Cart.json");
+
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullReadableValuesToWriteException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static List<CartProduct> creatingHistoryList(String client_id) {
+        try {
+            JSONArray jsonList = initializationFiles(
+                    initializingDir("/database/clients/" + client_id).getCanonicalPath()
+                            + "/History.json");
+
+            if (jsonList == null)
+                return null;
+            if (jsonList.isEmpty())
+                return new ArrayList<CartProduct>();
+
+            List<CartProduct> returnList = new ArrayList<>();
+
+            for (Object object : jsonList) {
+                returnList.add(new CartProduct((JSONObject) object));
+            }
+
+            return returnList;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void writtingHistoryFile(List<CartProduct> products, String client_id) {
+        try {
+            if (products == null)
+                throw new NullReadableValuesToWriteException();
+
+            JSONArray jsonArray = new JSONArray();
+
+            for (CartProduct product : products) {
+                jsonArray.add(product.transformToJsonObject());
+            }
+
+            FileWriter file = new FileWriter(initializingDir("/database/clients/" + client_id).getCanonicalPath()
+                    + "/History.json");
+
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullReadableValuesToWriteException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<Client> creatingClientList() {

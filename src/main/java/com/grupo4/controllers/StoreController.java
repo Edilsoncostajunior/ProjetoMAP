@@ -15,6 +15,11 @@ public class StoreController {
         this.stores = DatabaseStorage.creatingStoreList();
     }
 
+    public Boolean client_LOGIN(String email, String password) {
+        return stores.stream().anyMatch(value -> value.getEmail().equals(email)
+                && value.getPassword().equals(password));
+    }
+
     public List<Store> read() {
         return stores;
     }

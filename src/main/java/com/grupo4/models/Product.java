@@ -33,7 +33,10 @@ public class Product {
         this.name = (String) json.get("name");
         this.price = (double) json.get("price");
         this.quantity = ((Long) json.get("quantity")).intValue();
+    }
 
+    public CartProduct transformForCart(String entity_id, String store_id) {
+        return new CartProduct(entity_id, store_id, id, name, name, quantity);
     }
 
     public JSONObject transformToJsonObject() {
