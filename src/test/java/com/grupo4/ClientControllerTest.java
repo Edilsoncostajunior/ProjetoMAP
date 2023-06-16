@@ -23,38 +23,38 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void testClient_LOGIN() {
+    public void testClientLoginIfTrue() {
         Assertions.assertTrue(clientController.client_LOGIN("caio@email.com", "senha111"));
     }
 
     @Test
-    public void testClient_GET_ALL() {
+    public void testClientGetAllIfNotNull() {
         List<Client> clients = clientController.client_GET_ALL();
         Assertions.assertNotNull(clients);
     }
 
     @Test
-    public void testClient_GET_BY_ID() {
+    public void testClientGetByIdIfNotNull() {
         Client client = clientController
                 .client_GET_BY_ID(clientController.client_GET_ALL().stream().findFirst().get().getId());
         Assertions.assertNotNull(client);
     }
 
     @Test
-    public void testClient_GET_BY_NAME() {
+    public void testClientGetByNameIfNotNull() {
         Client client = clientController.client_GET_BY_NAME("Caio");
         Assertions.assertNotNull(client);
 
     }
 
     @Test
-    public void testClient_GET_BY_CPF() {
+    public void testClientGetByCpfIfNotNull() {
         Client client = clientController.client_GET_BY_CPF("12345678901");
         Assertions.assertNotNull(client);
     }
 
     @Test
-    public void testClient_PATCH() {
+    public void testClientPatchIfEquals() {
         Map<String, String> changes = new HashMap<>();
         String id = clientController.client_GET_ALL().stream().findFirst().get().getId();
         changes.put("id", id);
@@ -68,7 +68,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void testClient_POST() {
+    public void testClientPostIfEquals() {
         String name = "CH";
         String cpf = "987.654.321-00";
         String email = "Ch@email.com";
@@ -90,7 +90,7 @@ public class ClientControllerTest {
     }
 
     @Test
-    public void testClient_DELETE() {
+    public void testClientDeleteIfEquals() {
         String result = clientController
                 .client_DELETE(clientController.client_GET_ALL().stream().findFirst().get().getId());
         assertEquals("Finalizado com sucesso o cliente foi deletado com sucesso!", result);

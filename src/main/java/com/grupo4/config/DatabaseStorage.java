@@ -262,4 +262,44 @@ public class DatabaseStorage {
             e.printStackTrace();
         }
     }
+
+    public static List<Product> creatingStoreProductList(String arquivo) {
+        JSONArray jsonList = initializationFiles(arquivo);
+
+        if (jsonList == null)
+            return null;
+        if (jsonList.isEmpty())
+            return new ArrayList<Product>();
+
+        List<Product> returnList = new ArrayList<>();
+
+        for (Object object : jsonList) {
+            returnList.add(new Product((JSONObject) object));
+        }
+
+        return returnList;
+    }
+
+    public static void writtingStoreProductFile(List<Product> products, String arquivo) {
+        try {
+            if (products == null)
+                throw new NullReadableValuesToWriteException();
+
+            JSONArray jsonArray = new JSONArray();
+            for (Product product : products) {
+                jsonArray.add(product.transformToJsonObject());
+            }
+
+            FileWriter file = new FileWriter(arquivo);
+
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            file.close();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullReadableValuesToWriteException e) {
+            e.printStackTrace();
+        }
+    }
 }

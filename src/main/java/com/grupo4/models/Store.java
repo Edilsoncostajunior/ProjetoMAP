@@ -11,6 +11,7 @@ public class Store {
     private String password;
     private String document;
     private Address address;
+    
 
     public Store(String id, String name, String email, String password, String document, String street,
             String house_number,

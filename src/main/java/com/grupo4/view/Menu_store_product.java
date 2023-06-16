@@ -7,22 +7,22 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.grupo4.controllers.ProductController;
+import com.grupo4.controllers.Store_ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.models.Product;
 import com.grupo4.view.interfaceModel.Menu_options;
 
-public class Menu_product implements Menu_options, Runnable {
+public class Menu_store_product implements Menu_options, Runnable {
     private boolean isRunning = true;
-    private ProductController controller;
+    private Store_ProductController controller;
     private Scanner getScan;
 
     private List<String> options;
     private List<String> post;
 
-    private Menu_product() {
-        controller = new ProductController();
+    private Menu_store_product(String arquivo) {
+        controller = new Store_ProductController(arquivo);
         options = Arrays.asList(
                 "0 - mostrar todos os produtos",
                 "1 - mostrar produtos específico por id",
@@ -257,8 +257,8 @@ public class Menu_product implements Menu_options, Runnable {
         isRunning = true;
     }
 
-    public static Menu_product init() {
-        return new Menu_product();
+    public static Menu_store_product init(String arquivo) {
+        return new Menu_store_product(arquivo);
     }
 
 }

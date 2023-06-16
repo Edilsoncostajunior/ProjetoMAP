@@ -29,19 +29,19 @@ public class DatabaseStorageTest {
 
     @Test
     @DisplayName("Getting all clients present in the json file")
-    public void gettingAllClientsFromJsonFile() {
+    public void gettingAllClientsFromJsonFileIfNotNull() {
         Assertions.assertNotNull(DatabaseStorage.creatingClientList());
     }
 
     @Test
     @DisplayName("Getting all products present in the json file")
-    public void gettingAllProductsFromJsonFile() {
+    public void gettingAllProductsFromJsonFileIfNotNull() {
         Assertions.assertNotNull(DatabaseStorage.creatingProductList());
     }
 
     @Test
     @DisplayName("Getting all stores present in the json file")
-    public void gettingAllStoresFromJsonFile() {
+    public void gettingAllStoresFromJsonFileIfNotNull() {
         Assertions.assertNotNull(DatabaseStorage.creatingStoreList());
     }
 }
