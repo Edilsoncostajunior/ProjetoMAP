@@ -12,7 +12,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.grupo4.controllers.StoreController;
-//import com.grupo4.controllers.Store_ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.error.NullReadableValuesToWriteException;
@@ -22,9 +21,6 @@ import com.grupo4.view.interfaceModel.Menu_options;
 public class Menu_store implements Menu_options, Runnable {
     private boolean isRunning = true;
     private StoreController controller;
-    private Menu_store_product menu;
-    // private Menu_product menu_product;
-    // private Store_ProductController controller1;
     private Scanner getScan;
 
     private List<String> options;
@@ -32,9 +28,6 @@ public class Menu_store implements Menu_options, Runnable {
 
     private Menu_store() {
         controller = new StoreController();
-        // menu_product = Menu_product.init();
-        // menu = Menu_store_product()
-        // controller1 = new Store_ProductController();
         options = Arrays.asList(
                 "0 - mostrar todos as lojas",
                 "1 - mostrar loja específica por id",
@@ -221,6 +214,7 @@ public class Menu_store implements Menu_options, Runnable {
             try {
                 controller.remove("" + id);
                 isRunningOption = false;
+                delete_file_products_store("./src/main/java/com/grupo4/controllers/Store_Products/" + id + ".json");
 
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado para ser deletado!");
@@ -277,7 +271,6 @@ public class Menu_store implements Menu_options, Runnable {
                     case 5:
                         get_id_for_store_products();
                         break;
-
                     case 6:
                         isRunning = false;
                     default:
@@ -290,8 +283,6 @@ public class Menu_store implements Menu_options, Runnable {
 
         isRunning = true;
     }
-
-    // Organizar em outros arquivos esses códigos depois...
 
     public void get_id_for_store_products() {
         boolean isRunningOption = true;
@@ -310,6 +301,7 @@ public class Menu_store implements Menu_options, Runnable {
             try {
                 System.out.println(controller.read_by_id("" + id).toString());
                 get_file_products_store(id);
+
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado!");
 
@@ -335,7 +327,6 @@ public class Menu_store implements Menu_options, Runnable {
     public void get_file_products_store(int id) {
 
         File arquivo = new File("./src/main/java/com/grupo4/controllers/Store_Products/" + id + ".json");
-        String auxArquivo = arquivo.getAbsolutePath();
 
         try {
             if (arquivo.exists()) {
@@ -346,15 +337,19 @@ public class Menu_store implements Menu_options, Runnable {
 
             Menu_store_product.init(arquivo.getAbsolutePath()).run();
         } catch (NoSuchElementException | IOException e) {
-            // tratamento de erro
+            System.out.println("Menu de produtos não foi inicializado");
         }
 
     }
 
-    /*
-     * -----------------------------------------------------------------------------
-     * ---------------
-     */
+    public void delete_file_products_store(String arquivo) {
+
+        File auxArquivo = new File(arquivo);
+
+        if (auxArquivo.delete()) {
+            return;
+        }
+    }
 
     public static Menu_store init() {
         return new Menu_store();
