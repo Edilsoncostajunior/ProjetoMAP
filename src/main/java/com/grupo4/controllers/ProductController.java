@@ -50,7 +50,7 @@ public class ProductController {
         return products.stream().filter(value -> value.getName().equals(name)).findFirst().get();
     }
 
-    public void product_POST(String brand, String description, String category, String name, double price,
+    public String product_POST(String brand, String description, String category, String name, double price,
             int quantity) {
         String id = products.size() == 0 ? "0"
                 : String.valueOf(products.stream()
@@ -59,6 +59,8 @@ public class ProductController {
                         .orElse(0) + 1);
         products.add(new Product(id, brand, description, category, name, price, quantity));
         DatabaseStorage.writtingStoreProductFile(products, store_id);
+
+        return "Produto adicionado com sucesso!";
     }
 
     public void product_PATCH(Map<String, String> changes) {
@@ -76,9 +78,11 @@ public class ProductController {
         DatabaseStorage.writtingStoreProductFile(products, store_id);
     }
 
-    public void product_DELETE(String id) {
+    public String product_DELETE(String id) {
         products = products.stream().filter(value -> !value.getId().equals(id)).toList();
         DatabaseStorage.writtingStoreProductFile(products, store_id);
+
+        return "Produto deletado com sucesso!";
     }
 
     public String getStore_id() {

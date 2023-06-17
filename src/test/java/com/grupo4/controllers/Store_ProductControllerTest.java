@@ -15,7 +15,7 @@ import com.grupo4.models.Product;
 
 public class Store_ProductControllerTest {
 
-    private Store_ProductController store_ProductController = new Store_ProductController("./src/main/java/com/grupo4/controllers/Store_Products/1.json");
+    private ProductController store_ProductController = ProductController.getInstance("1");
 ;
 
     @BeforeEach
