@@ -88,4 +88,14 @@ public class ProductController {
     public String getStore_id() {
         return store_id;
     }
+
+    public void decreaseProduct(String product_id, int quantityToDecrease) {
+        for (int index = 0; index < products.size(); index++) {
+            if (products.get(index).getId().equals(product_id)) {
+                products.get(index).setQuantity(products.get(index).getQuantity() - quantityToDecrease);
+            }
+        }
+
+        DatabaseStorage.writtingStoreProductFile(products, store_id);
+    }
 }
