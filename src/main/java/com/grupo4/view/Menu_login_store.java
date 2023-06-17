@@ -7,22 +7,22 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.grupo4.controllers.Store_ProductController;
+import com.grupo4.controllers.ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.models.Product;
-import com.grupo4.view.interfaceModel.Menu_options;
 
-public class Menu_store_product implements Menu_options, Runnable {
+public class Menu_login_store implements Runnable {
     private boolean isRunning = true;
-    private Store_ProductController controller;
+    private ProductController controller;
     private Scanner getScan;
 
     private List<String> options;
     private List<String> post;
 
-    private Menu_store_product(String arquivo) {
-        controller = new Store_ProductController(arquivo);
+    private Menu_login_store(Map<String, String> loginInfo) {
+        controller = ProductController.getInstance(loginInfo.get("id"));
+
         options = Arrays.asList(
                 "0 - mostrar todos os produtos",
                 "1 - mostrar produtos específico por id",
@@ -35,7 +35,6 @@ public class Menu_store_product implements Menu_options, Runnable {
                 "name", "brand", "description", "category", "price", "quantity");
     }
 
-    @Override
     public void option_get_all() {
         System.out.println("-----------  produtos ----------");
 
@@ -49,9 +48,11 @@ public class Menu_store_product implements Menu_options, Runnable {
         for (Product product : products) {
             System.out.println(product.toString());
         }
+
+        System.out.println("Pressione enter para continuar...");
+        getScan.nextLine();
     }
 
-    @Override
     public void option_get_id() {
         boolean isRunningOption = true;
 
@@ -63,12 +64,15 @@ public class Menu_store_product implements Menu_options, Runnable {
         while (isRunningOption) {
             System.out.print("Digite o numero do id: ");
 
-            int id = getScan.nextInt();
+            String id = getScan.nextInt() + "";
             getScan.nextLine();
 
             try {
-                controller.product_GET_BY_ID("" + id);
+                System.out.println(controller.product_GET_BY_ID(id));
+                isRunningOption = false;
 
+                System.out.println("Pressione enter para continuar...");
+                getScan.nextLine();
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado!");
 
@@ -90,7 +94,6 @@ public class Menu_store_product implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_post() {
         Map<String, String> inputs = new HashMap<>();
         boolean isRunningOption = true;
@@ -118,7 +121,6 @@ public class Menu_store_product implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_update() {
         Map<String, String> inputs = new HashMap<>();
         boolean isRunningOption = true;
@@ -174,7 +176,6 @@ public class Menu_store_product implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_delete() {
         boolean isRunningOption = true;
 
@@ -213,11 +214,10 @@ public class Menu_store_product implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void run() {
         getScan = new Scanner(System.in);
         while (isRunning) {
-            System.out.println("MENU PRODUTO");
+            System.out.println("MENU STORE");
 
             options.stream().forEach(System.out::println);
 
@@ -246,6 +246,7 @@ public class Menu_store_product implements Menu_options, Runnable {
                         break;
                     case 5:
                         isRunning = false;
+                        break;
                     default:
                         throw new InexistentSelectOptionException();
                 }
@@ -257,8 +258,7 @@ public class Menu_store_product implements Menu_options, Runnable {
         isRunning = true;
     }
 
-    public static Menu_store_product init(String arquivo) {
-        return new Menu_store_product(arquivo);
+    public static Menu_login_store init(Map<String, String> loginInfo) {
+        return new Menu_login_store(loginInfo);
     }
-
 }

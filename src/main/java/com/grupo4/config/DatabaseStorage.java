@@ -263,39 +263,47 @@ public class DatabaseStorage {
         }
     }
 
-    public static List<Product> creatingStoreProductList(String arquivo) {
-        JSONArray jsonList = initializationFiles(arquivo);
+    public static List<Product> creatingStoreProductList(String store_id) {
+        JSONArray jsonList;
+        try {
+            jsonList = initializationFiles(
+                    initializingDir("/database/products").getCanonicalPath()
+                            + "/productStore_" + store_id + ".json");
+            if (jsonList == null)
+                return null;
+            if (jsonList.isEmpty())
+                return new ArrayList<Product>();
 
-        if (jsonList == null)
-            return null;
-        if (jsonList.isEmpty())
-            return new ArrayList<Product>();
+            List<Product> returnList = new ArrayList<>();
 
-        List<Product> returnList = new ArrayList<>();
+            for (Object object : jsonList) {
+                returnList.add(new Product((JSONObject) object));
+            }
 
-        for (Object object : jsonList) {
-            returnList.add(new Product((JSONObject) object));
+            return returnList;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-
-        return returnList;
+        return null;
     }
 
-    public static void writtingStoreProductFile(List<Product> products, String arquivo) {
+    public static void writtingStoreProductFile(List<Product> products, String store_id) {
         try {
             if (products == null)
                 throw new NullReadableValuesToWriteException();
 
             JSONArray jsonArray = new JSONArray();
+
             for (Product product : products) {
                 jsonArray.add(product.transformToJsonObject());
             }
 
-            FileWriter file = new FileWriter(arquivo);
+            FileWriter file = new FileWriter(initializingDir("/database/products/").getCanonicalPath()
+                    + "/productStore_" + store_id + ".json");
 
             file.write(jsonArray.toJSONString());
             file.flush();
             file.close();
-
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullReadableValuesToWriteException e) {

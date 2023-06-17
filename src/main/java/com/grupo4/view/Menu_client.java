@@ -11,9 +11,8 @@ import com.grupo4.controllers.ClientController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.models.Client;
-import com.grupo4.view.interfaceModel.Menu_options;
 
-public class Menu_client implements Menu_options, Runnable {
+public class Menu_client implements Runnable {
     private boolean isRunning = true;
     private ClientController controller;
     private Scanner getScan;
@@ -22,7 +21,7 @@ public class Menu_client implements Menu_options, Runnable {
     private List<String> post;
 
     private Menu_client() {
-        controller = new ClientController();
+        controller = ClientController.getInstance();
         options = Arrays.asList(
                 "0 - mostrar todos os clients",
                 "1 - mostrar cliente específico por id",
@@ -46,7 +45,6 @@ public class Menu_client implements Menu_options, Runnable {
                 "country");
     }
 
-    @Override
     public void option_get_all() {
         System.out.println("-----------  clientes ----------");
 
@@ -62,7 +60,6 @@ public class Menu_client implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_get_id() {
         boolean isRunningOption = true;
 
@@ -101,7 +98,6 @@ public class Menu_client implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_post() {
         Map<String, String> inputs = new HashMap<>();
         boolean isRunningOption = true;
@@ -130,7 +126,6 @@ public class Menu_client implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_update() {
         Map<String, String> inputs = new HashMap<>();
         boolean isRunningOption = true;
@@ -186,7 +181,6 @@ public class Menu_client implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void option_delete() {
         boolean isRunningOption = true;
 
@@ -225,7 +219,6 @@ public class Menu_client implements Menu_options, Runnable {
         }
     }
 
-    @Override
     public void run() {
         getScan = new Scanner(System.in);
         while (isRunning) {

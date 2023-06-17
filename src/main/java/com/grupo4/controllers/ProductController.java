@@ -1,17 +1,41 @@
 package com.grupo4.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.grupo4.config.DatabaseStorage;
 import com.grupo4.models.Product;
 
 public class ProductController {
-    private List<Product> products;
+    public static List<ProductController> instance = null;
 
-    public ProductController() {
-        this.products = DatabaseStorage.creatingProductList();
+    private List<Product> products;
+    private String store_id;
+
+    private ProductController(String store_id) {
+        this.store_id = store_id;
+        this.products = DatabaseStorage.creatingStoreProductList(store_id);
+    }
+
+    public static synchronized ProductController getInstance(String store_id) {
+        if (instance == null) {
+            instance = new ArrayList<>();
+        }
+
+        Optional<ProductController> pOptional = instance.stream().filter(value -> value.getStore_id().equals(store_id))
+                .findFirst();
+
+        if (!pOptional.isPresent()) {
+            ProductController productController = new ProductController(store_id);
+            instance.add(productController);
+
+            return productController;
+        }
+
+        return pOptional.get();
     }
 
     public List<Product> product_GET_ALL() {
@@ -26,38 +50,38 @@ public class ProductController {
         return products.stream().filter(value -> value.getName().equals(name)).findFirst().get();
     }
 
-    public String product_POST(String brand, String description, String category, String name, double price,
+    public void product_POST(String brand, String description, String category, String name, double price,
             int quantity) {
-        String id = products.size() == 0 ? "0" : String.valueOf(products.stream()
-        .mapToInt(p -> Integer.parseInt(p.getId()))
-        .max()
-        .orElse(0) + 1);
+        String id = products.size() == 0 ? "0"
+                : String.valueOf(products.stream()
+                        .mapToInt(p -> Integer.parseInt(p.getId()))
+                        .max()
+                        .orElse(0) + 1);
         products.add(new Product(id, brand, description, category, name, price, quantity));
-        DatabaseStorage.writtingProductFile(products);
-
-        return "O novo Cliente foi adicionado com sucesso!";
-
+        DatabaseStorage.writtingStoreProductFile(products, store_id);
     }
 
-    public String product_PATCH(Map<String, String> changes) {
-
+    public void product_PATCH(Map<String, String> changes) {
         int product_index = IntStream.range(0, products.size())
                 .filter(i -> products.get(i).getId().equals(changes.get("id")))
                 .findFirst()
                 .orElse(-1);
 
         if (product_index == -1) {
-            return "Erro: produto não cadastrada!";
+            System.out.println("Erro: produto não cadastrada!");
+            return;
         }
 
         products.get(product_index).update(changes);
-        DatabaseStorage.writtingProductFile(products);
-        return "Finalizado com sucesso as alterações no produto!";
+        DatabaseStorage.writtingStoreProductFile(products, store_id);
     }
 
-    public String product_DELETE(String id) {
+    public void product_DELETE(String id) {
         products = products.stream().filter(value -> !value.getId().equals(id)).toList();
-        DatabaseStorage.writtingProductFile(products);
-        return "O produto foi deletado com sucesso!";
+        DatabaseStorage.writtingStoreProductFile(products, store_id);
+    }
+
+    public String getStore_id() {
+        return store_id;
     }
 }

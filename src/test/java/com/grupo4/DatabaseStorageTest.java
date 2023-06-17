@@ -24,7 +24,7 @@ public class DatabaseStorageTest {
 
     @BeforeAll
     public void setup() {
-        controller = new ClientController();
+        controller = ClientController.getInstance();
     }
 
     @Test

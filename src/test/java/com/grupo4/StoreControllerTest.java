@@ -21,7 +21,7 @@ public class StoreControllerTest {
 
     @Before
     public void setUp() {
-        storeController = new StoreController();
+        storeController = StoreController.getInstance();
     }
 
     @Test

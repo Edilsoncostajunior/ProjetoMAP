@@ -1,7 +1,9 @@
 package com.grupo4.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.grupo4.config.DatabaseStorage;
@@ -9,15 +11,34 @@ import com.grupo4.error.NullReadableValuesToWriteException;
 import com.grupo4.models.Store;
 
 public class StoreController {
+    private static StoreController instance = null;
+
     private List<Store> stores;
 
-    public StoreController() {
+    private StoreController() {
         this.stores = DatabaseStorage.creatingStoreList();
     }
 
-    public Boolean client_LOGIN(String email, String password) {
-        return stores.stream().anyMatch(value -> value.getEmail().equals(email)
-                && value.getPassword().equals(password));
+    public static synchronized StoreController getInstance() {
+        if (instance == null) {
+            instance = new StoreController();
+        }
+
+        return instance;
+    }
+
+    public Map<String, String> store_LOGIN(String email, String password) {
+        Optional<Store> clienteOptional = stores.stream().filter(value -> value.getEmail().equals(email)
+                && value.getPassword().equals(password)).findFirst();
+        if (clienteOptional.isPresent()) {
+            Map<String, String> loginInfo = new HashMap<>();
+
+            loginInfo.put("id", clienteOptional.get().getId());
+            loginInfo.put("name", clienteOptional.get().getName());
+
+            return loginInfo;
+        }
+        return null;
     }
 
     public List<Store> read() {

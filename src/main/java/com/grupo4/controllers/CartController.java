@@ -3,6 +3,7 @@ package com.grupo4.controllers;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.grupo4.config.DatabaseStorage;
@@ -11,14 +12,36 @@ import com.grupo4.models.Product;
 import com.grupo4.models.Store;
 
 public class CartController {
+    private static ArrayList<CartController> instance = null;
+
     private List<CartProduct> products;
     private String client_id;
     private Store store;
 
-    public CartController(String client_id, Store store) {
-        this.products = DatabaseStorage.creatingCartList(client_id, store.getId());
+    private CartController(String client_id, String store_id) {
+        this.products = DatabaseStorage.creatingCartList(client_id, store_id);
         this.client_id = client_id;
-        this.store = store;
+        this.store = DatabaseStorage.creatingStoreList().stream().filter(value -> value.getId().equals(store_id))
+                .findAny().get();
+    }
+
+    public static synchronized CartController getInstance(String client_id, String store_id) {
+        if (instance == null) {
+            instance = new ArrayList<>();
+        }
+
+        Optional<CartController> cOptional = instance.stream()
+                .filter(value -> value.getClient_id().equals(client_id) && value.getStore().getId().equals(store_id))
+                .findFirst();
+
+        if (!cOptional.isPresent()) {
+            CartController cartController = new CartController(client_id, store_id);
+            instance.add(cartController);
+
+            return cartController;
+        }
+
+        return cOptional.get();
     }
 
     public List<CartProduct> product_GET_ALL() {
@@ -66,5 +89,13 @@ public class CartController {
 
         products = new ArrayList<>();
         DatabaseStorage.writtingCartFile(products, client_id, store.getId());
+    }
+
+    public String getClient_id() {
+        return client_id;
+    }
+
+    public Store getStore() {
+        return store;
     }
 }

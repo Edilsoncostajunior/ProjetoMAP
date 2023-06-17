@@ -14,7 +14,7 @@ import com.grupo4.controllers.ClientController;
 import com.grupo4.models.Client;
 
 public class ClientControllerTest {
-    private ClientController clientController = new ClientController();
+    private ClientController clientController = ClientController.getInstance();
 
     @Before
     public void setUp() {
@@ -24,7 +24,7 @@ public class ClientControllerTest {
 
     @Test
     public void testClientLoginIfTrue() {
-        Assertions.assertTrue(clientController.client_LOGIN("caio@email.com", "senha111"));
+        Assertions.assertNotNull(clientController.client_LOGIN("caio@email.com", "senha111"));
     }
 
     @Test

@@ -1,1 +1,18 @@
-[{"password":"senha445","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"10987654321","name":"Caio","id":"2","email":"caio@example.com"}]
+[
+  {
+    "password": "senha445",
+    "address": {
+      "country": "US",
+      "city": "Anytown",
+      "street": "123 Main St",
+      "neighbourhood": "Downtown",
+      "house_number": "42",
+      "state": "ST",
+      "postal_code": "12345"
+    },
+    "document": "10987654321",
+    "name": "Caio",
+    "id": "2",
+    "email": "caio@example.com"
+  }
+]

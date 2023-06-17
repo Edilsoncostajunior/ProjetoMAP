@@ -1,24 +1,45 @@
 package com.grupo4.controllers;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.grupo4.config.DatabaseStorage;
 import com.grupo4.models.Client;
 
 public class ClientController {
+    private static ClientController instance = null;
+
     private List<Client> clients;
 
-    public ClientController() {
+    private ClientController() {
         this.clients = DatabaseStorage.creatingClientList();
+    }
+
+    public static synchronized ClientController getInstance() {
+        if (instance == null) {
+            instance = new ClientController();
+        }
+
+        return instance;
     }
 
     // FACADE FUNCTIONS
     // - Client
-    public Boolean client_LOGIN(String email, String password) {
-        return clients.stream().anyMatch(value -> value.getEmail().equals(email)
-                && value.getPassword().equals(password));
+    public Map<String, String> client_LOGIN(String email, String password) {
+        Optional<Client> clienteOptional = clients.stream().filter(value -> value.getEmail().equals(email)
+                && value.getPassword().equals(password)).findFirst();
+        if (clienteOptional.isPresent()) {
+            Map<String, String> loginInfo = new HashMap<>();
+
+            loginInfo.put("id", clienteOptional.get().getId());
+            loginInfo.put("name", clienteOptional.get().getName());
+
+            return loginInfo;
+        }
+        return null;
     }
 
     public List<Client> client_GET_ALL() {
@@ -63,7 +84,7 @@ public class ClientController {
 
     public String client_DELETE(String id) {
         this.client_GET_BY_ID(id);
-        
+
         clients = clients.stream().filter(value -> !value.getId().equals(id)).toList();
 
         DatabaseStorage.writtingClientFile(clients);
