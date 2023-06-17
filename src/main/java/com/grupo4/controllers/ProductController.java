@@ -52,6 +52,7 @@ public class ProductController {
 
     public String product_POST(String brand, String description, String category, String name, double price,
             int quantity) {
+        List<Product> products = new ArrayList<>(this.products);
         String id = products.size() == 0 ? "0"
                 : String.valueOf(products.stream()
                         .mapToInt(p -> Integer.parseInt(p.getId()))
@@ -59,6 +60,8 @@ public class ProductController {
                         .orElse(0) + 1);
         products.add(new Product(id, brand, description, category, name, price, quantity));
         DatabaseStorage.writtingStoreProductFile(products, store_id);
+
+        this.products = products;
 
         return "Produto adicionado com sucesso!";
     }

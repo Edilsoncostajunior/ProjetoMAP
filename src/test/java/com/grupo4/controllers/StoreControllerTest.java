@@ -85,6 +85,6 @@ public class StoreControllerTest {
 
     @Test
     public void isUniquedocumentoTestIfTrue() {
-        assertTrue(storeController.isUniquedocumento("1", ""));
+        assertTrue(storeController.isUniquedocumentoAndEmail("1", "@", ""));
     }
 }

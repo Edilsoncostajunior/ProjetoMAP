@@ -9,13 +9,14 @@ import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeAll;
 
 import com.grupo4.models.Client;
 
 public class ClientControllerTest {
     private ClientController clientController = ClientController.getInstance();
 
-    @Before
+    @BeforeAll
     public void setUp() {
         clientController.client_POST("Caio", "12345678901", "caio@email.com", "senha111", "rua 2", "5", "33", "44",
                 "CG", "PB", "BR");

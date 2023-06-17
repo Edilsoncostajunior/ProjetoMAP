@@ -1,5 +1,6 @@
 package com.grupo4.controllers;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,7 +52,8 @@ public class StoreController {
 
     public void write(String name, String email, String password, String documento, String street, String house_number,
             String neighbourhood, String postal_code, String city, String state, String country) {
-        if (isUniquedocumento(documento, "")) {
+        if (isUniquedocumentoAndEmail(documento, email, "")) {
+            List<Store> stores = new ArrayList<>(this.stores);
             String id = String.valueOf(stores.stream()
                     .mapToInt(p -> Integer.parseInt(p.getId()))
                     .max()
@@ -59,6 +61,7 @@ public class StoreController {
             stores.add(new Store(id, name, email, password, documento, street, house_number, neighbourhood, postal_code,
                     city, state, country));
             DatabaseStorage.writtingStoreFile(stores);
+            this.stores = stores;
 
         } else {
             System.out.println("Cpf ou Cnpj corresponde a uma store existente.");
@@ -76,7 +79,8 @@ public class StoreController {
             return;
         }
 
-        if (changes.get("document") == null || isUniquedocumento(changes.get("document"), changes.get("id"))) {
+        if (changes.get("document") == null
+                || isUniquedocumentoAndEmail(changes.get("document"), changes.get("email"), changes.get("id"))) {
             stores.get(client_index).update(changes);
             DatabaseStorage.writtingStoreFile(stores);
         } else {
@@ -89,13 +93,14 @@ public class StoreController {
         DatabaseStorage.writtingStoreFile(stores);
     }
 
-    public boolean isUniquedocumento(String store_comp, String id) {
+    public boolean isUniquedocumentoAndEmail(String store_doc_comp, String store_email_comp, String id) {
         if (stores.size() == 0) {
             return true;
         }
 
         for (Store store : stores) {
-            if (store_comp.equals(store.getDocument()) && !store.getId().equals(id)) {
+            if (store_doc_comp.equals(store.getDocument()) && store_email_comp.equals(store.getEmail())
+                    && !store.getId().equals(id)) {
                 return false;
             }
         }

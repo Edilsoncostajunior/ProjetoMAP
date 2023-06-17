@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,23 +14,19 @@ import com.grupo4.models.Product;
 
 public class Store_ProductControllerTest {
 
-    private ProductController store_ProductController = ProductController.getInstance("1");
-;
-
-    @BeforeEach
-    public void setUp() {
-        store_ProductController.product_POST( "Avon", "Perfume da Avon", "Perfumes", "joy fragancy", 1000, 10);
-    }
+    private ProductController store_ProductController = ProductController.getInstance("6");
 
     @Test
     public void testProductGetAllIfNotNull() {
+        store_ProductController.product_POST("Avon", "Perfume da Avon", "Perfumes", "joy fragancy", 1000, 10);
+
         List<Product> products = store_ProductController.product_GET_ALL();
         Assertions.assertNotNull(products);
     }
 
     @Test
     public void testProductGetByIdIfEquals() {
-        String id = store_ProductController.product_GET_ALL().stream().findAny().get().getId();
+        String id = store_ProductController.product_GET_ALL().stream().findFirst().get().getId();
         Product Product = store_ProductController.product_GET_BY_ID(id);
         assertEquals(id, Product.getId());
 
@@ -41,8 +36,8 @@ public class Store_ProductControllerTest {
     public void testProductPostIfEquals() {
         String brand = "Avon";
         String description = "Perfume da Avon";
-        String category= "Perfumes";
-        String name =  "Secrets";
+        String category = "Perfumes";
+        String name = "Secrets";
         double price = 1000;
         int quantity = 10;
 
@@ -53,7 +48,7 @@ public class Store_ProductControllerTest {
         assertEquals("Secrets", Product.getName());
     }
 
-   @Test
+    @Test
     public void testProductPatchIfEquals() {
         String id = store_ProductController.product_GET_ALL().stream().findFirst().get().getId();
 
@@ -71,7 +66,6 @@ public class Store_ProductControllerTest {
     public void testProductDeleteIfNotNull() {
         String result = store_ProductController
                 .product_DELETE(store_ProductController.product_GET_ALL().stream().findFirst().get().getId());
-        store_ProductController.product_DELETE(store_ProductController.product_GET_ALL().stream().findFirst().get().getId());
         assertEquals("Produto deletado com sucesso!", result);
     }
 }

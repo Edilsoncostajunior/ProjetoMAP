@@ -53,6 +53,8 @@ public class CartController {
     }
 
     public void PutInTheCart(Product product, int quantity) {
+        List<CartProduct> products = new ArrayList<>(this.products);
+
         String id = products.size() == 0 ? "0"
                 : String.valueOf(products.stream()
                         .mapToInt(p -> Integer.parseInt(p.getId()))
@@ -60,6 +62,8 @@ public class CartController {
                         .orElse(0) + 1);
         products.add(new CartProduct(id, store.getId(), product.getId(), product.getName(), store.getName(), quantity));
         DatabaseStorage.writtingCartFile(products, client_id, store.getId());
+
+        this.products = products;
     }
 
     public void MakeChanges(Map<String, String> changes) {
