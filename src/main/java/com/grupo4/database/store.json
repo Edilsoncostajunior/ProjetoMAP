@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [
   {
     "password": "senha445",
@@ -16,3 +17,6 @@
     "email": "caio@example.com"
   }
 ]
+=======
+[{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"4256455","name":"New Store","id":"3","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"5105980","name":"New Store","id":"4","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"4064837","name":"New Store","id":"5","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"8250484","name":"New Store","id":"6","email":"newstore@example.com"}]
+>>>>>>> 66bdf3936dc8e9b4df11a4779e3f39b451324c71
