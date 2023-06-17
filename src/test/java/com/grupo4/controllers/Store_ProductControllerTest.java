@@ -6,35 +6,27 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
-import org.junit.Before;
+
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.grupo4.models.Product;
 
 public class Store_ProductControllerTest {
 
-    private Store_ProductController store_ProductController;
+    private Store_ProductController store_ProductController = new Store_ProductController("./src/main/java/com/grupo4/controllers/Store_Products/1.json");
+;
 
-    JSONObject json = new JSONObject();
-
-    @Before
+    @BeforeEach
     public void setUp() {
-        store_ProductController = new Store_ProductController(null);
         store_ProductController.product_POST( "Avon", "Perfume da Avon", "Perfumes", "joy fragancy", 1000, 10);
     }
 
     @Test
-    public void testProductIfEquals() {
-        Product Product = new Product("1","O boticario", "Perfume ", "Cosmeticos", "Secrets", 150.00, 10);
-        assertEquals("1", Product.getId());
-    }
-
-    @Test
     public void testProductGetAllIfNotNull() {
-        List<Product> Products = store_ProductController.product_GET_ALL();
-        Assertions.assertNotNull(Products);
+        List<Product> products = store_ProductController.product_GET_ALL();
+        Assertions.assertNotNull(products);
     }
 
     @Test
@@ -55,7 +47,7 @@ public class Store_ProductControllerTest {
         int quantity = 10;
 
         String resultado = store_ProductController.product_POST(brand, description, category, name, price, quantity);
-        assertEquals("O novo Cliente foi adicionado com sucesso!", resultado);
+        assertEquals("Produto adicionado com sucesso!", resultado);
 
         Product Product = store_ProductController.product_GET_BY_NAME("Secrets");
         assertEquals("Secrets", Product.getName());
@@ -80,6 +72,6 @@ public class Store_ProductControllerTest {
         String result = store_ProductController
                 .product_DELETE(store_ProductController.product_GET_ALL().stream().findFirst().get().getId());
         store_ProductController.product_DELETE(store_ProductController.product_GET_ALL().stream().findFirst().get().getId());
-        assertEquals("O produto foi deletado com sucesso!", result);
+        assertEquals("Produto deletado com sucesso!", result);
     }
 }

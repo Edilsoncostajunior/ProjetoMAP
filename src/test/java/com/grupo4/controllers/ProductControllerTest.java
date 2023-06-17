@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.JSONObject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -15,8 +14,6 @@ import com.grupo4.models.Product;
 public class ProductControllerTest {
 
     private ProductController productController;
-
-    JSONObject json = new JSONObject();
 
     @Before
     public void setUp() {
