@@ -1,4 +1,4 @@
-package com.grupo4;
+package com.grupo4.controllers;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -11,7 +11,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import com.grupo4.controllers.StoreController;
 import com.grupo4.error.NullReadableValuesToWriteException;
 import com.grupo4.models.Store;
 

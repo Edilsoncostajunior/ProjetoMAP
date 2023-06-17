@@ -3,7 +3,6 @@ package com.grupo4;
 import java.io.IOException;
 import org.json.simple.parser.ParseException;
 
-import com.grupo4.config.DatabaseStorage;
 import com.grupo4.view.Menu;
 
 public class App {

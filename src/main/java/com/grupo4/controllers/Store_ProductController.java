@@ -28,7 +28,7 @@ public class Store_ProductController {
         return products.stream().filter(value -> value.getName().equals(name)).findFirst().get();
     }
 
-    public void product_POST(String brand, String description, String category, String name, double price,
+    public String product_POST(String brand, String description, String category, String name, double price,
             int quantity) {
         String id = products.size() == 0 ? "0" : String.valueOf(products.stream()
         .mapToInt(p -> Integer.parseInt(p.getId()))
@@ -36,25 +36,33 @@ public class Store_ProductController {
         .orElse(0) + 1);
         products.add(new Product(id, brand, description, category, name, price, quantity));
         DatabaseStorage.writtingStoreProductFile(products, arquivo);
+
+        return "Produto adicionado com sucesso!";
     }
 
-    public void product_PATCH(Map<String, String> changes) {
+    public String product_PATCH(Map<String, String> changes) {
         int product_index = IntStream.range(0, products.size())
                 .filter(i -> products.get(i).getId().equals(changes.get("id")))
                 .findFirst()
                 .orElse(-1);
 
         if (product_index == -1) {
-            System.out.println("Erro: produto não cadastrada!");
-            return;
+            return "Erro: produto não cadastrada!";
         }
 
         products.get(product_index).update(changes);
         DatabaseStorage.writtingStoreProductFile(products, arquivo);
+        return "Produto modigicado com sucesso!";
     }
 
-    public void product_DELETE(String id) {
+    public String product_DELETE(String id) {
         products = products.stream().filter(value -> !value.getId().equals(id)).toList();
         DatabaseStorage.writtingStoreProductFile(products, arquivo);
+        return "Produto deletado com sucesso!";
+
+    }
+
+    public Product product_GET_BY_NAME(String name) {
+        return products.stream().filter(value -> value.getName().equals(name)).findFirst().get();
     }
 }

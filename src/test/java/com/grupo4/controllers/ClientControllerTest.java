@@ -1,4 +1,4 @@
-package com.grupo4;
+package com.grupo4.controllers;
 
 import static org.junit.Assert.assertEquals;
 
@@ -10,7 +10,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
-import com.grupo4.controllers.ClientController;
 import com.grupo4.models.Client;
 
 public class ClientControllerTest {

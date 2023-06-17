@@ -1,4 +1,4 @@
-package com.grupo4;
+package com.grupo4.controllers;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
@@ -6,7 +6,6 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 
 import com.grupo4.config.DatabaseStorage;
-import com.grupo4.controllers.ClientController;
 
 public class DatabaseStorageTest {
     ClientController controller;
