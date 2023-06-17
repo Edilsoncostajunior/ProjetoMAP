@@ -6,11 +6,13 @@ import static org.junit.Assert.assertTrue;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
 
+import com.grupo4.controllers.StoreController;
 import com.grupo4.error.NullReadableValuesToWriteException;
 import com.grupo4.models.Store;
 
@@ -30,13 +32,23 @@ public class StoreControllerTest {
     }
 
     @Test
-    public void writeTestIfTrue() {
-        int size = storeController.read().size();
-        storeController.write("New Store", "newstore@example.com", "password", "1321321", "123 Main St",
-                "42", "Downtown", "12345", "Anytown", "ST", "US");
-        List<Store> stores = storeController.read();
-        Assertions.assertTrue(stores.size() > size);
-    }
+    public void testAddNewStoreIncreasesStoreListSize() {
+    Random random = new Random();
+
+    // Gera um número de documento aleatório com 7 dígitos
+    int numeroDocumento = random.nextInt(9000000) + 1000000;
+    String numeroDocumentoString = Integer.toString(numeroDocumento);
+    // Configuração do estado inicial
+    int initialSize = storeController.read().size();
+
+    // Utiliza o número de documento gerado no método write
+    storeController.write("New Store", "newstore@example.com", "password", numeroDocumentoString, "123 Main St",
+        "42", "Downtown", "12345", "Anytown", "ST", "US");
+    // Verificação do resultado
+    List<Store> stores = storeController.read();
+    int newSize = stores.size();
+    Assertions.assertEquals(initialSize + 1, newSize);
+}
 
     @Test
     public void updateTestIfEquals() {
