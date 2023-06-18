@@ -57,6 +57,7 @@ public class Menu_cart_store implements Runnable {
         getScan.nextLine();
     }
 
+
     public void option_get_cart_all() {
         System.out.println("----------- produtos ----------");
 
@@ -77,6 +78,7 @@ public class Menu_cart_store implements Runnable {
         getScan.nextLine();
     }
 
+    
     public void option_put_in_cart() {
         boolean isRunningOption = true;
 
