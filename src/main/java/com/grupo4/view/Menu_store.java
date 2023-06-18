@@ -7,27 +7,28 @@ import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
-import com.grupo4.controllers.ClientController;
+import com.grupo4.controllers.StoreController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
-import com.grupo4.models.Client;
+import com.grupo4.error.NullReadableValuesToWriteException;
+import com.grupo4.models.Store;
 
-public class Menu_client implements Runnable {
+public class Menu_store implements Runnable {
     private boolean isRunning = true;
-    private ClientController controller;
+    private StoreController controller;
     private Scanner getScan;
 
     private List<String> options;
     private List<String> post;
 
-    private Menu_client() {
-        controller = ClientController.getInstance();
+    private Menu_store() {
+        controller = StoreController.getInstance();
         options = Arrays.asList(
-                "0 - mostrar todos os clients",
-                "1 - mostrar cliente específico por id",
-                "2 - criar novo cliente",
-                "3 - atualizar cliente",
-                "4 - deletar cliente",
+                "0 - mostrar todos as lojas",
+                "1 - mostrar loja específica por id",
+                "2 - criar nova loja",
+                "3 - atualizar loja",
+                "4 - deletar loja",
                 "5 - sair");
 
         post = Arrays.asList(
@@ -45,18 +46,19 @@ public class Menu_client implements Runnable {
     }
 
     public void option_get_all() {
-        System.out.println("-----------  clientes ----------");
+        System.out.println("-----------  lojas ----------");
 
-        List<Client> clients = controller.client_GET_ALL();
+        List<Store> stores = controller.read();
 
-        if (clients.size() == 0) {
-            System.out.println("Não existe clientes cadastrados!\n");
+        if (stores.size() == 0) {
+            System.out.println("Não existe lojas cadastradas!\n");
             return;
         }
 
-        for (Client client : clients) {
-            System.out.println(client.toString());
+        for (Store store : stores) {
+            System.out.println(store.toString());
         }
+
         System.out.println("Pressione enter para continuar...");
         getScan.nextLine();
     }
@@ -64,8 +66,8 @@ public class Menu_client implements Runnable {
     public void option_get_id() {
         boolean isRunningOption = true;
 
-        if (controller.client_GET_ALL().size() == 0) {
-            System.out.println("Não existe clientes cadastrados!\n");
+        if (controller.read().size() == 0) {
+            System.out.println("Não existe lojas cadastradas!\n");
             return;
         }
 
@@ -76,8 +78,7 @@ public class Menu_client implements Runnable {
             getScan.nextLine();
 
             try {
-                controller.client_GET_BY_ID("" + id);
-
+                System.out.println(controller.read_by_id("" + id).toString());
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado!");
 
@@ -96,7 +97,9 @@ public class Menu_client implements Runnable {
                     }
                 }
             }
+            isRunningOption = false;
         }
+
         System.out.println("Pressione enter para continuar...");
         getScan.nextLine();
     }
@@ -121,7 +124,7 @@ public class Menu_client implements Runnable {
                 }
             }
 
-            controller.client_POST(inputs.get("name"), inputs.get("document"), inputs.get("email"),
+            controller.write(inputs.get("name"), inputs.get("document"), inputs.get("email"),
                     inputs.get("password"), inputs.get("street"), inputs.get("house_number"),
                     inputs.get("neighbourhood"), inputs.get("postal_code"), inputs.get("city"),
                     inputs.get("state"), inputs.get("country"));
@@ -134,8 +137,8 @@ public class Menu_client implements Runnable {
         boolean isRunningOption = true;
         boolean isRunningOptionId = true;
 
-        if (controller.client_GET_ALL().size() == 0) {
-            System.out.println("Não existe clientes cadastrados!\n");
+        if (controller.read().size() == 0) {
+            System.out.println("Não existe lojas cadastradas!\n");
             return;
         }
 
@@ -147,7 +150,7 @@ public class Menu_client implements Runnable {
                 getScan.nextLine();
 
                 try {
-                    controller.client_GET_BY_ID("" + id);
+                    controller.read_by_id("" + id);
                 } catch (NoSuchElementException e) {
                     System.out.println("Id não encontrado!");
 
@@ -179,16 +182,21 @@ public class Menu_client implements Runnable {
                     inputs.put(post.get(index), input);
             }
 
-            controller.client_PATCH(inputs);
-            isRunningOption = false;
+            try {
+                controller.update(inputs);
+                isRunningOption = false;
+
+            } catch (NullReadableValuesToWriteException e) {
+                System.err.println(e);
+            }
         }
     }
 
     public void option_delete() {
         boolean isRunningOption = true;
 
-        if (controller.client_GET_ALL().size() == 0) {
-            System.out.println("Não existe clientes cadastrados!");
+        if (controller.read().size() == 0) {
+            System.out.println("Não existe lojas cadastradas!");
             return;
         }
 
@@ -199,7 +207,8 @@ public class Menu_client implements Runnable {
             getScan.nextLine();
 
             try {
-                controller.client_DELETE("" + id);
+                controller.remove("" + id);
+                isRunningOption = false;
 
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado para ser deletado!");
@@ -222,10 +231,11 @@ public class Menu_client implements Runnable {
         }
     }
 
+    @Override
     public void run() {
         getScan = new Scanner(System.in);
         while (isRunning) {
-            System.out.println("MENU CLIENTE");
+            System.out.println("MENU LOJA");
 
             options.stream().forEach(System.out::println);
 
@@ -254,6 +264,7 @@ public class Menu_client implements Runnable {
                         break;
                     case 5:
                         isRunning = false;
+                        break;
                     default:
                         throw new InexistentSelectOptionException();
                 }
@@ -265,7 +276,7 @@ public class Menu_client implements Runnable {
         isRunning = true;
     }
 
-    public static Menu_client init() {
-        return new Menu_client();
+    public static Menu_store init() {
+        return new Menu_store();
     }
 }

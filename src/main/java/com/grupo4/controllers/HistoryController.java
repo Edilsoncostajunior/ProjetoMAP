@@ -53,4 +53,18 @@ public class HistoryController {
     public String getClient_id() {
         return client_id;
     }
+
+    public static void setInstance(List<HistoryController> instance) {
+        HistoryController.instance = instance;
+    }
+
+    public void setProducts(List<CartProduct> products) {
+        this.products = products;
+    }
+
+    public void setClient_id(String client_id) {
+        this.client_id = client_id;
+    }
+
+    
 }

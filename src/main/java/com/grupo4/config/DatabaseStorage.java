@@ -82,8 +82,8 @@ public class DatabaseStorage {
             }
 
             FileWriter file = new FileWriter(
-                    initializingDir("/database/clients/" + client_id + "/cart/" + store_id).getCanonicalPath()
-                            + "/Cart.json");
+                    initializingDir("/database/clients/" + client_id).getCanonicalPath()
+                            + "/CartStore_" + store_id + ".json");
 
             file.write(jsonArray.toJSONString());
             file.flush();

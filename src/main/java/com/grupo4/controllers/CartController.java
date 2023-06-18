@@ -55,15 +55,21 @@ public class CartController {
     public void PutInTheCart(Product product, int quantity) {
         List<CartProduct> products = new ArrayList<>(this.products);
 
-        String id = products.size() == 0 ? "0"
-                : String.valueOf(products.stream()
-                        .mapToInt(p -> Integer.parseInt(p.getId()))
-                        .max()
-                        .orElse(0) + 1);
-        products.add(new CartProduct(id, store.getId(), product.getId(), product.getName(), store.getName(), quantity));
-        DatabaseStorage.writtingCartFile(products, client_id, store.getId());
+        if (product.getQuantity() > 0) {
+            String id = products.size() == 0 ? "0"
+                    : String.valueOf(products.stream()
+                            .mapToInt(p -> Integer.parseInt(p.getId()))
+                            .max()
+                            .orElse(0) + 1);
+            products.add(
+                    new CartProduct(id, store.getId(), product.getId(), product.getName(), store.getName(), quantity));
+            DatabaseStorage.writtingCartFile(products, client_id, store.getId());
 
-        this.products = products;
+            this.products = products;
+        }
+        else {
+            System.out.println("Não é possível, pois não há estoque");
+        }
     }
 
     public void MakeChanges(Map<String, String> changes) {
@@ -87,12 +93,31 @@ public class CartController {
     }
 
     public void buyProducts() {
-        List<CartProduct> history = DatabaseStorage.creatingCartList(client_id, store.getId());
-        history.addAll(products);
+        List<CartProduct> history = new ArrayList<>(DatabaseStorage.creatingHistoryList(client_id));
+        ProductController productController = ProductController.getInstance(store.getId());
+        for (CartProduct cartProduct : products) {
+            String getReponse = productController.decreaseProduct(cartProduct.getProduct_id(),
+                    cartProduct.getQuantity());
+            if (!getReponse.equals("OK")) {
+                cartProduct.setQuantity(Integer.parseInt(getReponse));
+                
+                
+            }
+            String id = history.size() == 0 ? "0"
+                    : String.valueOf(products.stream()
+                            .mapToInt(p -> Integer.parseInt(p.getId()))
+                            .max()
+                            .orElse(0) + 1);
+            cartProduct.setId(id);
+            history.add(cartProduct);
+        }
+
         DatabaseStorage.writtingHistoryFile(history, client_id);
 
         products = new ArrayList<>();
         DatabaseStorage.writtingCartFile(products, client_id, store.getId());
+
+        HistoryController.getInstance(client_id).setProducts(history);
     }
 
     public String getClient_id() {

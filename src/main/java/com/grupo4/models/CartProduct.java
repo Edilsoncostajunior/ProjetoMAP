@@ -96,4 +96,29 @@ public class CartProduct {
     public int getQuantity() {
         return quantity;
     }
+
+    public void setStore_id(String store_id) {
+        this.store_id = store_id;
+    }
+
+    public void setProduct_id(String product_id) {
+        this.product_id = product_id;
+    }
+
+    public void setProduct_name(String product_name) {
+        this.product_name = product_name;
+    }
+
+    public void setStore_name(String store_name) {
+        this.store_name = store_name;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
 }

@@ -143,15 +143,15 @@ public class Menu_cart_store implements Runnable {
 
             boolean isRunningForContinue = true;
             while (isRunningForContinue) {
-                System.out.print("Deseja continuar (S ou N): ");
+                System.out.print("Deseja remover mais uma (S ou N): ");
 
                 String again = getScan.next();
                 getScan.nextLine();
 
-                if (again.equals("S")) {
+                if (again.equals("N")) {
                     isRunningForContinue = false;
                     isRunningOption = false;
-                } else if (again.equals("N")) {
+                } else if (again.equals("S")) {
                     isRunningForContinue = false;
                 }
             }
@@ -159,6 +159,7 @@ public class Menu_cart_store implements Runnable {
     }
 
     public void buy_products() {
+        controller.buyProducts();
     }
 
     @Override

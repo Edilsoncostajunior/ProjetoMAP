@@ -92,13 +92,24 @@ public class ProductController {
         return store_id;
     }
 
-    public void decreaseProduct(String product_id, int quantityToDecrease) {
+    public String decreaseProduct(String product_id, int quantityToDecrease) {
+        String response = "";
         for (int index = 0; index < products.size(); index++) {
             if (products.get(index).getId().equals(product_id)) {
-                products.get(index).setQuantity(products.get(index).getQuantity() - quantityToDecrease);
+                int newQuantity = products.get(index).getQuantity() - quantityToDecrease;
+                if (newQuantity >= 0) {
+                    products.get(index).setQuantity(newQuantity);
+                    response = "OK";
+                } else {
+                    products.get(index).setQuantity(0);
+                    response = "" + newQuantity;
+                }
+                break;
             }
         }
 
         DatabaseStorage.writtingStoreProductFile(products, store_id);
+
+        return response;
     }
 }
