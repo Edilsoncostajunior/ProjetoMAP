@@ -135,7 +135,6 @@ public class Menu_store implements Runnable {
     public void option_update() {
         Map<String, String> inputs = new HashMap<>();
         boolean isRunningOption = true;
-        boolean isRunningOptionId = true;
 
         if (controller.read().size() == 0) {
             System.out.println("Não existe lojas cadastradas!\n");
@@ -143,53 +142,45 @@ public class Menu_store implements Runnable {
         }
 
         while (isRunningOption) {
-            while (isRunningOptionId) {
-                System.out.print("Digite o numero do id: ");
+            System.out.print("Digite o numero do id: ");
 
-                int id = getScan.nextInt();
-                getScan.nextLine();
-
-                try {
-                    controller.read_by_id("" + id);
-                } catch (NoSuchElementException e) {
-                    System.out.println("Id não encontrado!");
-
-                    boolean isRunningForContinue = true;
-                    while (isRunningForContinue) {
-                        System.out.print("Deseja continuar (S ou N): ");
-
-                        String again = getScan.next();
-                        getScan.nextLine();
-
-                        if (again.equals("N")) {
-                            isRunningForContinue = false;
-                            isRunningOption = false;
-                        } else if (again.equals("S")) {
-                            isRunningForContinue = false;
-                        }
-                    }
-                }
-
-                inputs.put("id", "" + id);
-                isRunningOptionId = false;
-            }
-
-            for (int index = 0; index < post.size(); index++) {
-                System.out.print("Digite o " + post.get(index) + ": ");
-                String input = getScan.nextLine();
-
-                if (input.length() > 3)
-                    inputs.put(post.get(index), input);
-            }
+            int id = getScan.nextInt();
+            getScan.nextLine();
 
             try {
+                controller.read_by_id("" + id);
+                inputs.put("id", "" + id);
+
+                for (int index = 0; index < post.size(); index++) {
+                    System.out.print("Digite o " + post.get(index) + ": ");
+                    String input = getScan.nextLine();
+
+                    if (input.length() > 3)
+                        inputs.put(post.get(index), input);
+                }
+
                 controller.update(inputs);
                 isRunningOption = false;
+            } catch (Exception e) {
+                System.out.println("Id não encontrado!");
 
-            } catch (NullReadableValuesToWriteException e) {
-                System.err.println(e);
+                boolean isRunningForContinue = true;
+                while (isRunningForContinue) {
+                    System.out.print("Deseja continuar (S ou N): ");
+
+                    String again = getScan.next();
+                    getScan.nextLine();
+
+                    if (again.equals("N")) {
+                        isRunningForContinue = false;
+                        isRunningOption = false;
+                    } else if (again.equals("S")) {
+                        isRunningForContinue = false;
+                    }
+                }
             }
         }
+
     }
 
     public void option_delete() {
