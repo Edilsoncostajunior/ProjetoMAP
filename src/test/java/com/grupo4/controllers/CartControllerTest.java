@@ -19,18 +19,18 @@ public class CartControllerTest {
 
     @BeforeEach
     public void setUp() {
-        ProductController store_ProductController = ProductController.getInstance("1");
-        clientId = "1";
-        storeId = "1";
+        ProductController store_ProductController = ProductController.getInstance("13");
+        clientId = "15";
+        storeId = "13";
         cartController = CartController.getInstance(clientId, storeId);
-        product = store_ProductController.product_GET_BY_ID("10");
+        product = store_ProductController.product_GET_BY_ID("15");
     }
 
     @Test
     public void testPutInTheCart() {
         int initialSize = cartController.product_GET_ALL().size();
 
-        cartController.PutInTheCart(product, 1);
+        cartController.PutInTheCart(product, 2);
 
         List<CartProduct> products = cartController.product_GET_ALL();
         Assertions.assertEquals(initialSize + 1, products.size());
@@ -38,7 +38,7 @@ public class CartControllerTest {
         CartProduct cartProduct = products.get(products.size() - 1);
         Assertions.assertEquals(storeId, cartProduct.getStore_id());
         Assertions.assertEquals(product.getId(), cartProduct.getProduct_id());
-        Assertions.assertEquals(product.getName(), cartProduct.getProduct_id());
+        Assertions.assertEquals(product.getName(), cartProduct.getProduct_name());
         Assertions.assertEquals(2, cartProduct.getQuantity());
     }
 
@@ -52,13 +52,13 @@ public class CartControllerTest {
         Map<String, String> changes = new HashMap<>();
         changes.put("id", cartProductId);
         changes.put("quantity", "3");
-        changes.put("productName", "Updated Product");
+        changes.put("product_name", "Updated Product");
 
         cartController.MakeChanges(changes);
 
         CartProduct updatedCartProduct = cartController.product_GET_BY_ID(cartProductId);
         Assertions.assertEquals(3, updatedCartProduct.getQuantity());
-        Assertions.assertEquals("Updated Product", updatedCartProduct.getProduct_id());
+        Assertions.assertEquals("Updated Product", updatedCartProduct.getProduct_name());
     }
 
     @Test
