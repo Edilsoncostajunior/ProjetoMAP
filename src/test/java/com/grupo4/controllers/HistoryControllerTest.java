@@ -3,7 +3,6 @@ package com.grupo4.controllers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.grupo4.models.CartProduct;
-import com.grupo4.models.Product;
-import com.grupo4.models.Store;
+
 
 public class HistoryControllerTest {
 

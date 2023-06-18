@@ -1,15 +1,15 @@
 package com.grupo4.controllers;
 
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertEquals;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+//import java.util.HashMap;
+//import java.util.List;
+//import java.util.Map;
 
 import org.junit.Before;
-import org.junit.Test;
-import org.junit.jupiter.api.Assertions;
-import com.grupo4.models.Product;
+//import org.junit.Test;
+//import org.junit.jupiter.api.Assertions;
+//import com.grupo4.models.Product;
 
 public class ProductControllerTest {
 
@@ -21,19 +21,19 @@ public class ProductControllerTest {
         // productController.product_POST( "Avon", "Perfume da Avon", "Perfumes", "joy fragancy", 1000, 10);
     }
 
-    @Test
+    //@Test
     public void testProductIfEquals() {
         // Product Product = new Product("1","O boticario", "Perfume ", "Cosmeticos", "Secrets", 150.00, 10);
         // assertEquals("1", Product.getId());
     }
 
-    @Test
+    //@Test
     public void testProductGetAllIfNotNull() {
         // List<Product> Products = productController.product_GET_ALL();
         // Assertions.assertNotNull(Products);
     }
 
-    @Test
+    //@Test
     public void testProductGetByIdIfEquals() {
         // String id = productController.product_GET_ALL().stream().findAny().get().getId();
         // Product Product = productController.product_GET_BY_ID(id);
@@ -41,7 +41,7 @@ public class ProductControllerTest {
 
     }
 
-    @Test
+    //@Test
     public void testProductPostIfEquals() {
         // String brand = "Avon";
         // String description = "Perfume da Avon";
@@ -57,7 +57,7 @@ public class ProductControllerTest {
         // assertEquals("Secrets", Product.getName());
     }
 
-   @Test
+   //@Test
     public void testProductPatchIfEquals() {
         // String id = productController.product_GET_ALL().stream().findFirst().get().getId();
 
@@ -71,7 +71,7 @@ public class ProductControllerTest {
         // assertEquals("patch test", product.getName());
     }
 
-    @Test
+    //@Test
     public void testProductDeleteIfNotNull() {
         // String result = productController
         //         .product_DELETE(productController.product_GET_ALL().stream().findFirst().get().getId());

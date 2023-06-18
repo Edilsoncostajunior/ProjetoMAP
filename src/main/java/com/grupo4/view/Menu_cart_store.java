@@ -1,16 +1,13 @@
 package com.grupo4.view;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.grupo4.controllers.CartController;
 import com.grupo4.controllers.ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
-import com.grupo4.error.InvalidInputException;
 import com.grupo4.models.CartProduct;
 import com.grupo4.models.Product;
 
@@ -78,7 +75,7 @@ public class Menu_cart_store implements Runnable {
         getScan.nextLine();
     }
 
-    
+
     public void option_put_in_cart() {
         boolean isRunningOption = true;
 

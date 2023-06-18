@@ -20,7 +20,8 @@ import com.grupo4.models.Store;
 
 public class DatabaseStorage {
     private static final String CLIENTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/clients.json";
-    private static final String PRODUCTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/Product.json";
+    //Não é mais necessario um json apenas para os produtos, pois agora a lista de produtos é criado junto com a loja.
+    //private static final String PRODUCTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/Product.json";
     private static final String STORE_DATABASE_PATH = "./src/main/java/com/grupo4/database/store.json";
 
     private static JSONArray initializationFiles(String path) {
