@@ -256,6 +256,7 @@ public class Menu_client implements Runnable {
                         break;
                     case 5:
                         isRunning = false;
+                        break;
                     default:
                         throw new InexistentSelectOptionException();
                 }
