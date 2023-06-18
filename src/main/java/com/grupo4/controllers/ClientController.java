@@ -64,9 +64,13 @@ public class ClientController {
                 .filter(i -> clients.get(i).getId().equals(changes.get("id")))
                 .findFirst()
                 .orElse(-1);
-        clients.get(client_index).update(changes);
-        DatabaseStorage.writtingClientFile(clients);
-        return "Finalizado com sucesso as alterações no cliente!";
+        if (client_index != -1) {
+            clients.get(client_index).update(changes);
+            DatabaseStorage.writtingClientFile(clients);
+            return "Finalizado com sucesso as alterações no cliente!";
+        }
+
+        return "Falha na atualização do cliente";
     }
 
     public String client_POST(String name, String cpf, String email, String password, String street,

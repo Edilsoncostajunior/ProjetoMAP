@@ -74,9 +74,11 @@ public class Menu_client implements Runnable {
 
             int id = getScan.nextInt();
             getScan.nextLine();
+           
 
             try {
-                controller.client_GET_BY_ID("" + id);
+                System.out.println( controller.client_GET_BY_ID("" + id));
+               
 
             } catch (NoSuchElementException e) {
                 System.out.println("Id não encontrado!");
@@ -163,20 +165,20 @@ public class Menu_client implements Runnable {
                             isRunningOption = false;
                         } else if (again.equals("S")) {
                             isRunningForContinue = false;
+                            
+                            for (int index = 0; index < post.size(); index++) {
+                                System.out.print("Digite o " + post.get(index) + ": ");
+                                String input = getScan.nextLine();
+
+                                if (input.length() > 3)
+                                    inputs.put(post.get(index), input);
+                                }
                         }
                     }
                 }
 
                 inputs.put("id", "" + id);
                 isRunningOptionId = false;
-            }
-
-            for (int index = 0; index < post.size(); index++) {
-                System.out.print("Digite o " + post.get(index) + ": ");
-                String input = getScan.nextLine();
-
-                if (input.length() > 3)
-                    inputs.put(post.get(index), input);
             }
 
             controller.client_PATCH(inputs);
