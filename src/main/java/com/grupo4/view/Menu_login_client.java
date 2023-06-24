@@ -10,12 +10,13 @@ import java.util.Scanner;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 import com.grupo4.config.DatabaseStorage;
 import com.grupo4.controllers.HistoryController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.models.Store;
-import com.grupo4.models.Avaliacao;
+import com.grupo4.models.CartProduct;
 
 public class Menu_login_client implements Runnable {
     private boolean isRunning = true;
@@ -70,36 +71,39 @@ public class Menu_login_client implements Runnable {
     private void productEvaluation() {
         // A ideia , até então , está sendo criar um arquivo json para armazenar a nota e o comentário do cliente
         int nota = 0;
-        String comment;
+        String comentario = "";
         openHistory();
+
         try {
             System.out.println("Digite o id do produto que deseja avaliar");
-            int productId = getScan.nextInt();
+            String productId = getScan.next();
+
+            historyController.product_GET_BY_ID(productId).getId();
 
             System.out.println("Dê uma nota para esse produto");
             nota = getScan.nextInt();
 
             System.out.println("Deixe um comentário para esse produto");
-            comment = getScan.next();
+            comentario = getScan.next();
 
-            String arquivo = "./src/main/java/com/grupo4/database/clients/" + loginInfo.get("id") + "/"
-                    + productId + "avaliacao.json";
+            String arquivo = "./src/main/java/com/grupo4/database/clients/" + loginInfo.get("id") + "/" + productId + "avaliacao.json";
 
             File file = new File(arquivo);
             file.createNewFile();
 
             JSONObject jsonAvaliacao = new JSONObject();
             jsonAvaliacao.put("nota", nota);
-            jsonAvaliacao.put("comentario", comment);
+            jsonAvaliacao.put("comentario", comentario);
 
             try (FileWriter fileWriter = new FileWriter(file)) {
                 fileWriter.write(jsonAvaliacao.toJSONString());
+
             } catch (IOException e) {
                 System.err.println("Erro ao criar o arquivo JSON");
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+            System.out.println("O id informado não corresponde a nenhuma compra");
         }
     }
 
