@@ -59,6 +59,7 @@ public class Menu_cart_store implements Runnable {
         System.out.println("----------- produtos ----------");
 
         List<CartProduct> products = controller.product_GET_ALL();
+        int contadorid = 0;
 
         if (products.size() == 0) {
             System.out.println("Não existe produtos no carrinho!\n");
@@ -67,7 +68,8 @@ public class Menu_cart_store implements Runnable {
 
         for (CartProduct product : products) {
             System.out.println("______________________________________________");
-            System.out.println(product.toString());
+            //System.out.println(product.toString());
+            System.out.println(product.getId());
             System.out.println("______________________________________________");
         }
 
