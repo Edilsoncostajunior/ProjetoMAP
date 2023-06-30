@@ -15,6 +15,7 @@ public class CartController {
     private static ArrayList<CartController> instance = null;
 
     private List<CartProduct> products;
+    private int pontos;
     private String client_id;
     private Store store;
 
@@ -100,8 +101,6 @@ public class CartController {
                     cartProduct.getQuantity());
             if (!getReponse.equals("OK")) {
                 cartProduct.setQuantity(Integer.parseInt(getReponse));
-                
-                
             }
             String id = history.size() == 0 ? "0"
                     : String.valueOf(products.stream()

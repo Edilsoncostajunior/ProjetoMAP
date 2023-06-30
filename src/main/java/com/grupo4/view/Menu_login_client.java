@@ -20,6 +20,7 @@ import com.grupo4.models.CartProduct;
 
 public class Menu_login_client implements Runnable {
     private boolean isRunning = true;
+    private int points;
     private Scanner getScan;
 
     private HistoryController historyController;
@@ -34,8 +35,13 @@ public class Menu_login_client implements Runnable {
         options = Arrays.asList(
                 "0 - escolher loja",
                 "1 - histórico de compras",
-                "2 - Avaliar compra",
-                "3 - sair");
+                "2 - sair");
+
+        // options = Arrays.asList(
+        //         "0 - escolher loja",
+        //         "1 - histórico de compras",
+        //         "2 - Consultar pontos",
+        //         "3 - sair");
     }
 
     private void selectStore() {
@@ -68,6 +74,23 @@ public class Menu_login_client implements Runnable {
         getScan.nextLine();
     }
 
+    private float pontuacao(){
+        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
+
+        int contador = 0;
+
+        for (CartProduct product: listaDeProdutos){
+            contador += 1;
+        }
+
+        return contador;
+    }
+
+    private void consultarPontuacao(){
+        System.out.println("Você possui " + pontuacao() + " pontos");
+    }
+
+    /*
     private void productEvaluation() {
         // A ideia , até então , está sendo criar um arquivo json para armazenar a nota e o comentário do cliente
         int nota = 0;
@@ -92,8 +115,10 @@ public class Menu_login_client implements Runnable {
             file.createNewFile();
 
             JSONObject jsonAvaliacao = new JSONObject();
+            jsonAvaliacao.put("store", historyController.product_GET_BY_ID(productId).getStore_id());
             jsonAvaliacao.put("nota", nota);
             jsonAvaliacao.put("comentario", comentario);
+
 
             try (FileWriter fileWriter = new FileWriter(file)) {
                 fileWriter.write(jsonAvaliacao.toJSONString());
@@ -106,7 +131,7 @@ public class Menu_login_client implements Runnable {
             System.out.println("O id informado não corresponde a nenhuma compra");
         }
     }
-
+*/
     @Override
     public void run() {
         getScan = new Scanner(System.in);
@@ -129,7 +154,7 @@ public class Menu_login_client implements Runnable {
                         this.openHistory();
                         break;
                     case 2:
-                        this.productEvaluation();
+                        this.consultarPontuacao();
                         break;
                     case 3:
                         isRunning = false;
