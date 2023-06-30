@@ -6,6 +6,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.grupo4.controllers.CartController;
+import com.grupo4.controllers.HistoryController;
 import com.grupo4.controllers.ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.models.CartProduct;
@@ -17,6 +18,7 @@ public class Menu_cart_store implements Runnable {
     private boolean isRunning = true;
 
     private CartController controller;
+    private HistoryController historyController;
     private ProductController productController;
 
     private List<String> options;
@@ -59,7 +61,6 @@ public class Menu_cart_store implements Runnable {
         System.out.println("----------- produtos ----------");
 
         List<CartProduct> products = controller.product_GET_ALL();
-        int contadorid = 0;
 
         if (products.size() == 0) {
             System.out.println("Não existe produtos no carrinho!\n");
@@ -161,6 +162,27 @@ public class Menu_cart_store implements Runnable {
 
     public void buy_products() {
         controller.buyProducts();
+    }
+
+    public float pontuacao(){
+        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
+
+        int contador = 0;
+
+        for (CartProduct product: listaDeProdutos){
+            contador += 1;
+        }
+
+        String contString1 = "" + contador;
+        String contString2 = "" + (int) contador/10 + "0";
+
+        if (contString1.equals(contString2)){
+            return contador;
+        }
+
+        else{
+            return -1;
+        }
     }
 
     @Override

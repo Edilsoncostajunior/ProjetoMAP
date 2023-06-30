@@ -66,5 +66,4 @@ public class HistoryController {
         this.client_id = client_id;
     }
 
-
 }

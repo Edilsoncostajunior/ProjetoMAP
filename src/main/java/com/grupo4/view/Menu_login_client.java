@@ -74,22 +74,6 @@ public class Menu_login_client implements Runnable {
         getScan.nextLine();
     }
 
-    private float pontuacao(){
-        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
-
-        int contador = 0;
-
-        for (CartProduct product: listaDeProdutos){
-            contador += 1;
-        }
-
-        return contador;
-    }
-
-    private void consultarPontuacao(){
-        System.out.println("Você possui " + pontuacao() + " pontos");
-    }
-
     /*
     private void productEvaluation() {
         // A ideia , até então , está sendo criar um arquivo json para armazenar a nota e o comentário do cliente
@@ -154,9 +138,6 @@ public class Menu_login_client implements Runnable {
                         this.openHistory();
                         break;
                     case 2:
-                        this.consultarPontuacao();
-                        break;
-                    case 3:
                         isRunning = false;
                         break;
                     default:
