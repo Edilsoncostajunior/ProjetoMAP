@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import com.grupo4.config.DatabaseStorage;
 import com.grupo4.models.CartProduct;
-import com.grupo4.models.Store;
 
 public class HistoryController {
     private static List<HistoryController> instance = null;

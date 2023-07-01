@@ -1,7 +1,6 @@
 package com.grupo4.view;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
@@ -9,8 +8,8 @@ import java.util.Scanner;
 
 import com.grupo4.controllers.CartController;
 import com.grupo4.controllers.ProductController;
+import com.grupo4.controllers.ReviewController;
 import com.grupo4.error.InexistentSelectOptionException;
-import com.grupo4.error.InvalidInputException;
 import com.grupo4.models.CartProduct;
 import com.grupo4.models.Product;
 
@@ -20,13 +19,17 @@ public class Menu_cart_store implements Runnable {
     private boolean isRunning = true;
 
     private CartController controller;
+    private ReviewController reviewController;
     private ProductController productController;
 
     private List<String> options;
+    private Map<String, String> loginInfo;
 
-    private Menu_cart_store(String id_store, String id_client) {
-        controller = CartController.getInstance(id_client, id_store);
+    private Menu_cart_store(Map<String, String> loginInfo, String id_store) {
+        controller = CartController.getInstance(loginInfo.get("id"), id_store);
         productController = ProductController.getInstance(id_store);
+        reviewController = ReviewController.getInstance(id_store);
+        this.loginInfo = loginInfo;
 
         options = Arrays.asList(
                 "0 - mostrar todos os produtos da loja",
@@ -159,6 +162,22 @@ public class Menu_cart_store implements Runnable {
     }
 
     public void buy_products() {
+        for (CartProduct product : controller.product_GET_ALL()) {
+            int value = -1;
+
+            while (value < 0 || value > 10) {
+                System.out.print("Digite uma nota de 1 a 10 para o produto " + product.getProduct_name() + ": ");
+                value = getScan.nextInt();
+                getScan.nextLine();
+            }
+
+            System.out.print("Digite uma review sobre o produto: ");
+            String comentary = getScan.nextLine();
+
+            reviewController.review_POST(product.getProduct_name(), product.getProduct_id(), loginInfo.get("name"),
+                    loginInfo.get("id"), comentary, value);
+        }
+
         controller.buyProducts();
     }
 
@@ -195,6 +214,7 @@ public class Menu_cart_store implements Runnable {
                         break;
                     case 5:
                         this.isRunning = false;
+                        break;
                     default:
                         throw new InexistentSelectOptionException();
                 }
@@ -206,7 +226,7 @@ public class Menu_cart_store implements Runnable {
         isRunning = true;
     }
 
-    public static Menu_cart_store init(String id_store, String id_client) {
-        return new Menu_cart_store(id_store, id_client);
+    public static Menu_cart_store init(Map<String, String> loginInfo, String id_store) {
+        return new Menu_cart_store(loginInfo, id_store);
     }
 }

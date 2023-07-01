@@ -8,13 +8,16 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import com.grupo4.controllers.ProductController;
+import com.grupo4.controllers.ReviewController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.error.InvalidInputException;
 import com.grupo4.models.Product;
+import com.grupo4.models.Review;
 
 public class Menu_login_store implements Runnable {
     private boolean isRunning = true;
     private ProductController controller;
+    private ReviewController reviewController;
     private Scanner getScan;
 
     private List<String> options;
@@ -22,6 +25,7 @@ public class Menu_login_store implements Runnable {
 
     private Menu_login_store(Map<String, String> loginInfo) {
         controller = ProductController.getInstance(loginInfo.get("id"));
+        reviewController = ReviewController.getInstance(loginInfo.get("id"));
 
         options = Arrays.asList(
                 "0 - mostrar todos os produtos",
@@ -29,7 +33,8 @@ public class Menu_login_store implements Runnable {
                 "2 - criar novo produtos",
                 "3 - atualizar produtos",
                 "4 - deletar produtos",
-                "5 - sair");
+                "5 - veja reviews",
+                "6 - sair");
 
         post = Arrays.asList(
                 "name", "brand", "description", "category", "price", "quantity");
@@ -47,6 +52,24 @@ public class Menu_login_store implements Runnable {
 
         for (Product product : products) {
             System.out.println(product.toString());
+        }
+
+        System.out.println("Pressione enter para continuar...");
+        getScan.nextLine();
+    }
+
+    public void option_get_review_all() {
+        System.out.println("-----------  produtos ----------");
+
+        List<Review> reviews = reviewController.review_GET_ALL();
+
+        if (reviews.size() == 0) {
+            System.out.println("Não existe review cadastrados!\n");
+            return;
+        }
+
+        for (Review review : reviews) {
+            System.out.println(review.toString());
         }
 
         System.out.println("Pressione enter para continuar...");
@@ -245,6 +268,9 @@ public class Menu_login_store implements Runnable {
                         option_delete();
                         break;
                     case 5:
+                        option_get_review_all();
+                        break;
+                    case 6:
                         isRunning = false;
                         break;
                     default:

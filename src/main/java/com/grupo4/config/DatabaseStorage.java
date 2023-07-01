@@ -16,11 +16,11 @@ import com.grupo4.error.NullReadableValuesToWriteException;
 import com.grupo4.models.CartProduct;
 import com.grupo4.models.Client;
 import com.grupo4.models.Product;
+import com.grupo4.models.Review;
 import com.grupo4.models.Store;
 
 public class DatabaseStorage {
     private static final String CLIENTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/clients.json";
-    private static final String PRODUCTS_DATABASE_PATH = "./src/main/java/com/grupo4/database/Product.json";
     private static final String STORE_DATABASE_PATH = "./src/main/java/com/grupo4/database/store.json";
 
     private static JSONArray initializationFiles(String path) {
@@ -44,6 +44,55 @@ public class DatabaseStorage {
         file.mkdirs();
 
         return file;
+    }
+
+    public static List<Review> creatingReviewFile(String store_id) {
+        try {
+            JSONArray jsonList = initializationFiles(
+                    initializingDir("/database/review/").getCanonicalPath()
+                            + "/review_" + store_id + ".json");
+
+            if (jsonList == null)
+                return null;
+            if (jsonList.isEmpty())
+                return new ArrayList<Review>();
+
+            List<Review> returnList = new ArrayList<>();
+
+            for (Object object : jsonList) {
+                returnList.add(new Review((JSONObject) object));
+            }
+
+            return returnList;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void writtingReviewFile(List<Review> reviews, String store_id) {
+        try {
+            if (reviews == null)
+                throw new NullReadableValuesToWriteException();
+
+            JSONArray jsonArray = new JSONArray();
+
+            for (Review review : reviews) {
+                jsonArray.add(review.transformToJsonObject());
+            }
+
+            FileWriter file = new FileWriter(
+                    initializingDir("/database/review/").getCanonicalPath()
+                            + "/review_" + store_id + ".json");
+
+            file.write(jsonArray.toJSONString());
+            file.flush();
+            file.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (NullReadableValuesToWriteException e) {
+            e.printStackTrace();
+        }
     }
 
     public static List<CartProduct> creatingCartList(String client_id, String store_id) {

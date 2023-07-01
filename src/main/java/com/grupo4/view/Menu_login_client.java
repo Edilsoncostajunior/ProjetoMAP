@@ -45,7 +45,7 @@ public class Menu_login_client implements Runnable {
             getScan.nextLine();
 
             if (stores.stream().anyMatch(value -> value.getId().equals(idLoja))) {
-                Menu_cart_store.init(idLoja, loginInfo.get("id")).run();
+                Menu_cart_store.init(loginInfo, idLoja).run();
                 isOK = !isOK;
             }
         }
