@@ -2,13 +2,11 @@ package com.grupo4.view;
 
 import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import com.grupo4.controllers.CartController;
 import com.grupo4.controllers.HistoryController;
 import com.grupo4.controllers.ProductController;
-import com.grupo4.models.CartProduct;
 import com.grupo4.models.Product;
 
 import java.io.ByteArrayInputStream;
@@ -27,33 +25,32 @@ public class Menu_login_clientTest {
     @Before
     void setUp() {
 
-        }
+    }
 
     @Test
     void pontuacaoTest() {
-
-        Map<String, String> loginInfo = new HashMap<>();
-        loginInfo.put("joy@gmail.com", "senha1234");
-        menuLoginClient = Menu_login_client.init(loginInfo);
-
         String clientId = "25";
         String storeId = "13";
+
+        Map<String, String> loginInfo = new HashMap<>();
+        loginInfo.put("id", clientId);
+        loginInfo.put("name", "teste");
+        menuLoginClient = Menu_login_client.init(loginInfo);
 
         historyController = HistoryController.getInstance(clientId);
         store_ProductController = ProductController.getInstance(storeId);
         cartController = CartController.getInstance(clientId, storeId);
         product1 = store_ProductController.product_GET_BY_ID("17");
 
-
         // Create sample products
-        //Product product1 = store_ProductController.product_GET_BY_NAME("Product 2");
-        //Product product2 = productController.product_GET_BY_NAME("Product 2");
+        // Product product1 = store_ProductController.product_GET_BY_NAME("Product 2");
+        // Product product2 = productController.product_GET_BY_NAME("Product 2");
 
         // Add products to the history controller
-        cartController.PutInTheCart(product1, 1);
-        cartController.buyProducts();
-
-
+        for (int i = 0; i < 10; i++) {
+            cartController.PutInTheCart(product1, 1);
+            cartController.buyProducts();
+        }
 
         // Simulating user input
         ByteArrayInputStream inputStream = new ByteArrayInputStream("1\n".getBytes());

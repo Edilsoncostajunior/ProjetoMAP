@@ -22,6 +22,7 @@ public class HistoryController {
         if (instance == null) {
             instance = new ArrayList<>();
         }
+        instance.forEach(value -> System.out.println(value.getClient_id()));
 
         Optional<HistoryController> hOptional = instance.stream()
                 .filter(value -> value.getClient_id().equals(client_id))
