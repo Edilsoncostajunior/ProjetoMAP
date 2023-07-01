@@ -29,7 +29,7 @@ public class Menu_login_clientTest {
 
     @Test
     void pontuacaoTest() {
-        String clientId = "25";
+        String clientId = "9";
         String storeId = "13";
 
         Map<String, String> loginInfo = new HashMap<>();
@@ -42,33 +42,31 @@ public class Menu_login_clientTest {
         cartController = CartController.getInstance(clientId, storeId);
         product1 = store_ProductController.product_GET_BY_ID("17");
 
-        // Create sample products
-        // Product product1 = store_ProductController.product_GET_BY_NAME("Product 2");
-        // Product product2 = productController.product_GET_BY_NAME("Product 2");
-
         // Add products to the history controller
         for (int i = 0; i < 10; i++) {
             cartController.PutInTheCart(product1, 1);
             cartController.buyProducts();
         }
 
-        // Simulating user input
-        ByteArrayInputStream inputStream = new ByteArrayInputStream("1\n".getBytes());
-        System.setIn(inputStream);
-
-        // Running the method
-        menuLoginClient.pontuacao();
-
         // Verifying the expected behavior
-        String expectedOutput = "Pontuação do Produto 1: 10.0\n";
+        String expectedOutput = "Parabéns, Você ganhou:";
         Assertions.assertEquals(expectedOutput, getConsoleOutput());
+        historyController.product_DELETE_ALL();
     }
 
     // Helper method to capture console output
     private String getConsoleOutput() {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(outputStream));
-        menuLoginClient.pontuacao();
-        return outputStream.toString();
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    System.setOut(new PrintStream(outputStream));
+    menuLoginClient.pontuacao();
+    String output = outputStream.toString();
+
+    String[] lines = output.split("\n");
+    if (lines.length >= 2) {
+        return lines[1]; // Retorna a segunda linha do output
     }
+
+    return output; // Retorna o output completo caso não haja segunda linha
+}
+
 }

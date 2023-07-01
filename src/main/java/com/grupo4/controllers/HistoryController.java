@@ -51,6 +51,11 @@ public class HistoryController {
         DatabaseStorage.writtingHistoryFile(products, client_id);
     }
 
+    public void product_DELETE_ALL() {
+        products.clear();
+        DatabaseStorage.writtingHistoryFile(products, client_id);
+    }
+
     public String getClient_id() {
         return client_id;
     }
