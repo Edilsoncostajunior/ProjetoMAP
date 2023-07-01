@@ -13,17 +13,21 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
 import com.grupo4.config.DatabaseStorage;
+import com.grupo4.controllers.CartController;
 import com.grupo4.controllers.HistoryController;
+import com.grupo4.controllers.ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.models.Store;
 import com.grupo4.models.CartProduct;
 
 public class Menu_login_client implements Runnable {
     private boolean isRunning = true;
-    private int points;
     private Scanner getScan;
 
     private HistoryController historyController;
+    private ProductController productController;
+    private CartController cartController;
+
 
     private Map<String, String> loginInfo;
     private List<String> options;
@@ -35,13 +39,8 @@ public class Menu_login_client implements Runnable {
         options = Arrays.asList(
                 "0 - escolher loja",
                 "1 - histórico de compras",
-                "2 - sair");
-
-        // options = Arrays.asList(
-        //         "0 - escolher loja",
-        //         "1 - histórico de compras",
-        //         "2 - Consultar pontos",
-        //         "3 - sair");
+                "2 - Verificar se há prêmio",
+                "3 - sair");
     }
 
     private void selectStore() {
@@ -74,48 +73,40 @@ public class Menu_login_client implements Runnable {
         getScan.nextLine();
     }
 
-    /*
-    private void productEvaluation() {
-        // A ideia , até então , está sendo criar um arquivo json para armazenar a nota e o comentário do cliente
-        int nota = 0;
-        String comentario = "";
-        openHistory();
+    public void pontuacao(){
+        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
 
-        try {
-            System.out.println("Digite o id do produto que deseja avaliar");
-            String productId = getScan.next();
+        int contador = 0;
 
-            historyController.product_GET_BY_ID(productId).getId();
+        for (CartProduct product: listaDeProdutos){
+            contador += 1;
+        }
 
-            System.out.println("Dê uma nota para esse produto");
-            nota = getScan.nextInt();
+        String contString1 = "" + contador;
+        String contString2 = "" + (int) contador/10 + "0";
 
-            System.out.println("Deixe um comentário para esse produto");
-            comentario = getScan.next();
+        if (contString1.equals(contString2)){
 
-            String arquivo = "./src/main/java/com/grupo4/database/clients/" + loginInfo.get("id") + "/" + productId + "avaliacao.json";
+            ProductController productController = ProductController.getInstance(historyController.product_GET_BY_ID("0").getStore_id());
 
-            File file = new File(arquivo);
-            file.createNewFile();
+            productController.decreaseProduct(historyController.product_GET_BY_ID("0").getProduct_id(), 1);
 
-            JSONObject jsonAvaliacao = new JSONObject();
-            jsonAvaliacao.put("store", historyController.product_GET_BY_ID(productId).getStore_id());
-            jsonAvaliacao.put("nota", nota);
-            jsonAvaliacao.put("comentario", comentario);
+            CartController cartController = CartController.getInstance(loginInfo.get("id"), historyController.product_GET_BY_ID("0").getStore_id());
 
+            cartController.PutInTheCart(productController.product_GET_BY_NAME(historyController.product_GET_BY_ID("0").getProduct_name()), 1);
 
-            try (FileWriter fileWriter = new FileWriter(file)) {
-                fileWriter.write(jsonAvaliacao.toJSONString());
+            cartController.buyProducts();
 
-            } catch (IOException e) {
-                System.err.println("Erro ao criar o arquivo JSON");
-            }
+            System.out.println("Parabéns, Você ganhou:\n");
+            System.out.println(productController.product_GET_BY_NAME(historyController.product_GET_BY_ID("0").getProduct_name()));
+        }
 
-        } catch (Exception e) {
-            System.out.println("O id informado não corresponde a nenhuma compra");
+        else{
+
+            System.out.println("Você ainda não acumulou pontos suficientes para ganhar algum prêmio :(");
         }
     }
-*/
+
     @Override
     public void run() {
         getScan = new Scanner(System.in);
@@ -138,6 +129,9 @@ public class Menu_login_client implements Runnable {
                         this.openHistory();
                         break;
                     case 2:
+                        this.pontuacao();
+                        break;
+                    case 3:
                         isRunning = false;
                         break;
                     default:

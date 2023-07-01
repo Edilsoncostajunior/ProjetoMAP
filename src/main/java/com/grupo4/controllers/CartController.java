@@ -18,8 +18,6 @@ public class CartController {
     private List<CartProduct> products;
     private String client_id;
     private Store store;
-    private CartProduct lastCartProduct;
-    private HistoryController historyController;
 
     private CartController(String client_id, String store_id) {
         this.products = DatabaseStorage.creatingCartList(client_id, store_id);
@@ -111,25 +109,22 @@ public class CartController {
                             .orElse(0) + 1);
             cartProduct.setId(id);
             history.add(cartProduct);
-
-            lastCartProduct = cartProduct;
         }
-        //conectar essa pontuacao() com Menu_cart_store
-        // if (pontuacao() != -1){
-
-        //     String getReponse = productController.decreaseProduct(lastCartProduct.getProduct_id(),
-        //             lastCartProduct.getQuantity());
-        //     if (!getReponse.equals("OK")) {
-        //         lastCartProduct.setQuantity(Integer.parseInt(getReponse));
-        //     }
-
-        //     System.out.println("deu certo");
-        // }
 
         DatabaseStorage.writtingHistoryFile(history, client_id);
 
         products = new ArrayList<>();
         DatabaseStorage.writtingCartFile(products, client_id, store.getId());
+
+        HistoryController.getInstance(client_id).setProducts(history);
+
+    }
+
+    public void addProductInHistory(){
+        List<CartProduct> history = new ArrayList<>(DatabaseStorage.creatingHistoryList(client_id));
+        DatabaseStorage.writtingHistoryFile(history, client_id);
+
+        System.out.println("add history");
 
         HistoryController.getInstance(client_id).setProducts(history);
 

@@ -164,27 +164,6 @@ public class Menu_cart_store implements Runnable {
         controller.buyProducts();
     }
 
-    public float pontuacao(){
-        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
-
-        int contador = 0;
-
-        for (CartProduct product: listaDeProdutos){
-            contador += 1;
-        }
-
-        String contString1 = "" + contador;
-        String contString2 = "" + (int) contador/10 + "0";
-
-        if (contString1.equals(contString2)){
-            return contador;
-        }
-
-        else{
-            return -1;
-        }
-    }
-
     @Override
     public void run() {
         getScan = new Scanner(System.in);
