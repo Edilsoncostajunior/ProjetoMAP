@@ -1,16 +1,9 @@
 package com.grupo4.view;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
 
 import com.grupo4.config.DatabaseStorage;
 import com.grupo4.controllers.CartController;
@@ -18,16 +11,12 @@ import com.grupo4.controllers.HistoryController;
 import com.grupo4.controllers.ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.models.Store;
-import com.grupo4.models.CartProduct;
 
 public class Menu_login_client implements Runnable {
     private boolean isRunning = true;
     private Scanner getScan;
 
     private HistoryController historyController;
-    private ProductController productController;
-    private CartController cartController;
-
 
     private Map<String, String> loginInfo;
     private List<String> options;
@@ -74,13 +63,7 @@ public class Menu_login_client implements Runnable {
     }
 
     public void pontuacao(){
-        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
-
-        int contador = 0;
-
-        for (CartProduct product: listaDeProdutos){
-            contador += 1;
-        }
+        int contador = historyController.product_GET_ALL().size();
 
         String contString1 = "" + contador;
         String contString2 = "" + (int) contador/10 + "0";
