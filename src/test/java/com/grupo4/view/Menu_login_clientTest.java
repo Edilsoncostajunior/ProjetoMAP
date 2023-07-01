@@ -42,19 +42,16 @@ public class Menu_login_clientTest {
         cartController = CartController.getInstance(clientId, storeId);
         product1 = store_ProductController.product_GET_BY_ID("17");
 
-        // Add products to the history controller
         for (int i = 0; i < 10; i++) {
             cartController.PutInTheCart(product1, 1);
             cartController.buyProducts();
         }
 
-        // Verifying the expected behavior
         String expectedOutput = "Parabéns, Você ganhou:";
         Assertions.assertEquals(expectedOutput, getConsoleOutput());
         historyController.product_DELETE_ALL();
     }
 
-    // Helper method to capture console output
     private String getConsoleOutput() {
     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
     System.setOut(new PrintStream(outputStream));
@@ -63,10 +60,10 @@ public class Menu_login_clientTest {
 
     String[] lines = output.split("\n");
     if (lines.length >= 2) {
-        return lines[1]; // Retorna a segunda linha do output
+        return lines[1];
     }
 
-    return output; // Retorna o output completo caso não haja segunda linha
+    return output; 
 }
 
 }

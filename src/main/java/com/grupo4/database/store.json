@@ -1,1 +1,82 @@
-[{"password":"newstore@example.com","address":{"country":"sadasdasd","city":"dsadasdas","street":"sadasdasd","neighbourhood":"dsadasdas","house_number":"asdasdas","state":"sadasdasd","postal_code":"dsadasdas"},"document":"sadasdas","name":"sadsadas","id":"13","email":"dsadsadas"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"8842884","name":"New Store","id":"14","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"9050372","name":"New Store","id":"15","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"2367128","name":"New Store","id":"16","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"8240797","name":"New Store","id":"17","email":"newstore@example.com"}]
+[
+    {
+      "password": "password",
+      "address": {
+        "country": "US",
+        "city": "Anytown",
+        "street": "123 Main St",
+        "neighbourhood": "Downtown",
+        "house_number": "42",
+        "state": "ST",
+        "postal_code": "12345"
+      },
+      "document": "4137542",
+      "name": "New Store",
+      "id": "12",
+      "email": "newstore@example.com"
+    },
+    {
+      "password": "newstore@example.com",
+      "address": {
+        "country": "sadasdasd",
+        "city": "dsadasdas",
+        "street": "sadasdasd",
+        "neighbourhood": "dsadasdas",
+        "house_number": "asdasdas",
+        "state": "sadasdasd",
+        "postal_code": "dsadasdas"
+      },
+      "document": "sadasdas",
+      "name": "sadsadas",
+      "id": "13",
+      "email": "dsadsadas"
+    },
+    {
+      "password": "password",
+      "address": {
+        "country": "US",
+        "city": "Anytown",
+        "street": "123 Main St",
+        "neighbourhood": "Downtown",
+        "house_number": "42",
+        "state": "ST",
+        "postal_code": "12345"
+      },
+      "document": "8842884",
+      "name": "New Store",
+      "id": "14",
+      "email": "newstore@example.com"
+    },
+    {
+      "password": "password",
+      "address": {
+        "country": "US",
+        "city": "Anytown",
+        "street": "123 Main St",
+        "neighbourhood": "Downtown",
+        "house_number": "42",
+        "state": "ST",
+        "postal_code": "12345"
+      },
+      "document": "9050372",
+      "name": "New Store",
+      "id": "15",
+      "email": "newstore@example.com"
+    },
+    {
+      "password": "password",
+      "address": {
+        "country": "US",
+        "city": "Anytown",
+        "street": "123 Main St",
+        "neighbourhood": "Downtown",
+        "house_number": "42",
+        "state": "ST",
+        "postal_code": "12345"
+      },
+      "document": "2367128",
+      "name": "New Store",
+      "id": "16",
+      "email": "newstore@example.com"
+    }
+  ]

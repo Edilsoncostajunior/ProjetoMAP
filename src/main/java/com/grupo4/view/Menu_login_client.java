@@ -81,7 +81,7 @@ public class Menu_login_client implements Runnable {
             cartController.buyProducts();
 
             System.out.print("Parabéns, Você ganhou:\n");
-            //System.out.println(productController.product_GET_BY_NAME(historyController.product_GET_BY_ID("0").getProduct_name()).getName());
+            System.out.println(productController.product_GET_BY_NAME(historyController.product_GET_BY_ID("0").getProduct_name()).getName());
         }
 
         else{

@@ -68,7 +68,7 @@ public class ClientControllerTest {
 
     @Test
     public void testClientPostIfEquals() {
-        String name = "CH";
+        String name = "Caio";
         String cpf = "987.654.321-00";
         String email = "Ch@email.com";
         String password = "senha123";
