@@ -120,16 +120,6 @@ public class CartController {
 
     }
 
-    public void addProductInHistory(){
-        List<CartProduct> history = new ArrayList<>(DatabaseStorage.creatingHistoryList(client_id));
-        DatabaseStorage.writtingHistoryFile(history, client_id);
-
-        System.out.println("add history");
-
-        HistoryController.getInstance(client_id).setProducts(history);
-
-    }
-
     public String getClient_id() {
         return client_id;
     }
