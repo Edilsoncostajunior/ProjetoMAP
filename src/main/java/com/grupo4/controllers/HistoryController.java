@@ -37,8 +37,6 @@ public class HistoryController {
         return hOptional.get();
     }
 
-   
-
     public List<CartProduct> product_GET_ALL() {
         return products;
     }
@@ -68,5 +66,4 @@ public class HistoryController {
         this.client_id = client_id;
     }
 
-    
 }

@@ -11,6 +11,7 @@ import com.grupo4.models.CartProduct;
 import com.grupo4.models.Product;
 import com.grupo4.models.Store;
 
+
 public class CartController {
     private static ArrayList<CartController> instance = null;
 
@@ -100,8 +101,6 @@ public class CartController {
                     cartProduct.getQuantity());
             if (!getReponse.equals("OK")) {
                 cartProduct.setQuantity(Integer.parseInt(getReponse));
-                
-                
             }
             String id = history.size() == 0 ? "0"
                     : String.valueOf(products.stream()
@@ -118,6 +117,7 @@ public class CartController {
         DatabaseStorage.writtingCartFile(products, client_id, store.getId());
 
         HistoryController.getInstance(client_id).setProducts(history);
+
     }
 
     public String getClient_id() {

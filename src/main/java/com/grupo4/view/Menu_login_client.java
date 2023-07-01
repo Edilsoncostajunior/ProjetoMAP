@@ -1,20 +1,33 @@
 package com.grupo4.view;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 import com.grupo4.config.DatabaseStorage;
+import com.grupo4.controllers.CartController;
 import com.grupo4.controllers.HistoryController;
+import com.grupo4.controllers.ProductController;
 import com.grupo4.error.InexistentSelectOptionException;
 import com.grupo4.models.Store;
+import com.grupo4.models.CartProduct;
 
 public class Menu_login_client implements Runnable {
     private boolean isRunning = true;
     private Scanner getScan;
 
     private HistoryController historyController;
+    private ProductController productController;
+    private CartController cartController;
+
 
     private Map<String, String> loginInfo;
     private List<String> options;
@@ -26,7 +39,8 @@ public class Menu_login_client implements Runnable {
         options = Arrays.asList(
                 "0 - escolher loja",
                 "1 - histórico de compras",
-                "2 - sair");
+                "2 - Verificar se há prêmio",
+                "3 - sair");
     }
 
     private void selectStore() {
@@ -59,6 +73,40 @@ public class Menu_login_client implements Runnable {
         getScan.nextLine();
     }
 
+    public void pontuacao(){
+        List<CartProduct> listaDeProdutos = historyController.product_GET_ALL();
+
+        int contador = 0;
+
+        for (CartProduct product: listaDeProdutos){
+            contador += 1;
+        }
+
+        String contString1 = "" + contador;
+        String contString2 = "" + (int) contador/10 + "0";
+
+        if (contString1.equals(contString2)){
+
+            ProductController productController = ProductController.getInstance(historyController.product_GET_BY_ID("0").getStore_id());
+
+            productController.decreaseProduct(historyController.product_GET_BY_ID("0").getProduct_id(), 1);
+
+            CartController cartController = CartController.getInstance(loginInfo.get("id"), historyController.product_GET_BY_ID("0").getStore_id());
+
+            cartController.PutInTheCart(productController.product_GET_BY_NAME(historyController.product_GET_BY_ID("0").getProduct_name()), 1);
+
+            cartController.buyProducts();
+
+            System.out.println("Parabéns, Você ganhou:\n");
+            System.out.println(productController.product_GET_BY_NAME(historyController.product_GET_BY_ID("0").getProduct_name()).getName());
+        }
+
+        else{
+
+            System.out.println("Você ainda não acumulou pontos suficientes para ganhar algum prêmio :(");
+        }
+    }
+
     @Override
     public void run() {
         getScan = new Scanner(System.in);
@@ -81,6 +129,9 @@ public class Menu_login_client implements Runnable {
                         this.openHistory();
                         break;
                     case 2:
+                        this.pontuacao();
+                        break;
+                    case 3:
                         isRunning = false;
                         break;
                     default:
