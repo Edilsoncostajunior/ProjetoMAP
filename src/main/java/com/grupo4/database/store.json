@@ -1,7 +1,5 @@
-<<<<<<< HEAD
 [
   {
-    "name": "AAAAAAAAAAAAAAAAAA",
     "password": "password",
     "address": {
       "country": "US",
@@ -12,44 +10,12 @@
       "state": "ST",
       "postal_code": "12345"
     },
-    "id": "10",
-    "email": "newstore@example.com",
-    "document": "6385276"
-  },
-  {
+    "document": "4137542",
     "name": "New Store",
-    "password": "password",
-    "address": {
-      "country": "US",
-      "city": "Anytown",
-      "street": "123 Main St",
-      "neighbourhood": "Downtown",
-      "house_number": "42",
-      "state": "ST",
-      "postal_code": "12345"
-    },
-    "id": "11",
-    "email": "newstore@example.com",
-    "document": "2172388"
-  },
-  {
-    "name": "New Store",
-    "password": "password",
-    "address": {
-      "country": "US",
-      "city": "Anytown",
-      "street": "123 Main St",
-      "neighbourhood": "Downtown",
-      "house_number": "42",
-      "state": "ST",
-      "postal_code": "12345"
-    },
     "id": "12",
-    "email": "newstore@example.com",
-    "document": "4137542"
+    "email": "newstore@example.com"
   },
   {
-    "name": "sadsadas",
     "password": "newstore@example.com",
     "address": {
       "country": "sadasdasd",
@@ -60,12 +26,12 @@
       "state": "sadasdasd",
       "postal_code": "dsadasdas"
     },
+    "document": "sadasdas",
+    "name": "sadsadas",
     "id": "13",
-    "email": "dsadsadas",
-    "document": "sadasdas"
+    "email": "dsadsadas"
   },
   {
-    "name": "New Store",
     "password": "password",
     "address": {
       "country": "US",
@@ -76,11 +42,41 @@
       "state": "ST",
       "postal_code": "12345"
     },
+    "document": "8842884",
+    "name": "New Store",
     "id": "14",
-    "email": "newstore@example.com",
-    "document": "8842884"
+    "email": "newstore@example.com"
+  },
+  {
+    "password": "password",
+    "address": {
+      "country": "US",
+      "city": "Anytown",
+      "street": "123 Main St",
+      "neighbourhood": "Downtown",
+      "house_number": "42",
+      "state": "ST",
+      "postal_code": "12345"
+    },
+    "document": "9050372",
+    "name": "New Store",
+    "id": "15",
+    "email": "newstore@example.com"
+  },
+  {
+    "password": "password",
+    "address": {
+      "country": "US",
+      "city": "Anytown",
+      "street": "123 Main St",
+      "neighbourhood": "Downtown",
+      "house_number": "42",
+      "state": "ST",
+      "postal_code": "12345"
+    },
+    "document": "2367128",
+    "name": "New Store",
+    "id": "16",
+    "email": "newstore@example.com"
   }
 ]
-=======
-[{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"4137542","name":"New Store","id":"12","email":"newstore@example.com"},{"password":"newstore@example.com","address":{"country":"sadasdasd","city":"dsadasdas","street":"sadasdasd","neighbourhood":"dsadasdas","house_number":"asdasdas","state":"sadasdasd","postal_code":"dsadasdas"},"document":"sadasdas","name":"sadsadas","id":"13","email":"dsadsadas"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"8842884","name":"New Store","id":"14","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"9050372","name":"New Store","id":"15","email":"newstore@example.com"},{"password":"password","address":{"country":"US","city":"Anytown","street":"123 Main St","neighbourhood":"Downtown","house_number":"42","state":"ST","postal_code":"12345"},"document":"2367128","name":"New Store","id":"16","email":"newstore@example.com"}]
->>>>>>> 3427366fffc823b9ceb7d755d6f90e95fd1d3732
