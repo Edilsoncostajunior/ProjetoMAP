@@ -7,6 +7,7 @@ import java.util.Optional;
 import java.util.stream.IntStream;
 
 import com.grupo4.config.DatabaseStorage;
+import com.grupo4.models.CartProduct;
 import com.grupo4.models.Review;
 
 public class ReviewController {
@@ -84,6 +85,10 @@ public class ReviewController {
         DatabaseStorage.writtingReviewFile(reviews, id);;
 
         return "Finalizado com sucesso o cliente foi deletado com sucesso!";
+    }
+
+    public void setReviews(List<Review> reviews ) {
+        this.reviews = reviews;
     }
 
     public String getId() {
