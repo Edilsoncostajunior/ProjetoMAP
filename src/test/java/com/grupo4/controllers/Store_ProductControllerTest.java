@@ -25,6 +25,15 @@ public class Store_ProductControllerTest {
 
     @Test
     public void testProductGetByIdIfEquals() {
+        String brand = "Avon";
+        String description = "Perfume da Avon";
+        String category = "Perfumes";
+        String name = "Secrets";
+        double price = 1000;
+        int quantity = 10;
+
+        store_ProductController.product_POST(brand, description, category, name, price, quantity);
+
         String id = store_ProductController.product_GET_ALL().stream().findFirst().get().getId();
         Product Product = store_ProductController.product_GET_BY_ID(id);
         assertEquals(id, Product.getId());
@@ -63,8 +72,7 @@ public class Store_ProductControllerTest {
 
     @Test
     public void testProductDeleteIfNotNull() {
-        String result = store_ProductController
-                .product_DELETE(store_ProductController.product_GET_ALL().stream().findFirst().get().getId());
+        String result = store_ProductController.product_DELETE(store_ProductController.product_GET_ALL().stream().findFirst().get().getId());
         assertEquals("Produto deletado com sucesso!", result);
     }
 }
