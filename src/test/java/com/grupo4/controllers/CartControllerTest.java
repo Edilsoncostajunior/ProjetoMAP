@@ -19,9 +19,10 @@ public class CartControllerTest {
 
     @BeforeEach
     public void setUp() {
-        ProductController store_ProductController = ProductController.getInstance("13");
         clientId = "15";
         storeId = "13";
+
+        ProductController store_ProductController = ProductController.getInstance(storeId);
         cartController = CartController.getInstance(clientId, storeId);
         product = store_ProductController.product_GET_BY_ID("15");
     }

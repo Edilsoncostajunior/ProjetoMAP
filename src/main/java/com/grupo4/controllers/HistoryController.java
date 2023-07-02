@@ -22,6 +22,7 @@ public class HistoryController {
         if (instance == null) {
             instance = new ArrayList<>();
         }
+        instance.forEach(value -> System.out.println(value.getClient_id()));
 
         Optional<HistoryController> hOptional = instance.stream()
                 .filter(value -> value.getClient_id().equals(client_id))
@@ -47,6 +48,11 @@ public class HistoryController {
 
     public void product_DELETE(String id) {
         products = products.stream().filter(value -> !value.getId().equals(id)).toList();
+        DatabaseStorage.writtingHistoryFile(products, client_id);
+    }
+
+    public void product_DELETE_ALL() {
+        products.clear();
         DatabaseStorage.writtingHistoryFile(products, client_id);
     }
 
