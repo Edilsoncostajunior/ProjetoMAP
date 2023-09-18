@@ -1,23 +1,20 @@
-<h1 align='center'>Marketplace</h1>
+<h1>Marketplace</h1>
 
 <div>
-    <h2>
-    Se trata de um sistema de marketplace simplificado, com base em Amazon, Americanas ou Mercado Livre realizado em equipe. Onde existem basicamente 2 tipos de usuário (cada um com uma visãodiferente do sistema):
+    <h3>
+    Se trata de um sistema de marketplace simplificado, com base em Amazon, Americanas ou Mercado Livre. Onde existem basicamente 2 tipos de usuário (cada um com uma visãodiferente do sistema):
         <p>
             <ul>
                 <li>A loja, que irá se cadastrar para vender no sistema;</li>
                 <li>O comprador, que poderá comprar os produtos oferecidos;</li>
             </ul>
-            <p align='center'>
-                <img src='loja_comprador.png' width='50%'/>
-            </p>
         </p>
-    </h2>
+    </h3>
 </div>
 
 <h1>Requisistos Gerais</h1>
 <div>
-    <h2>
+    <h3>
         <p>
             <ul>
                 <li>Req_01: CRUD de lojas:
@@ -107,6 +104,5 @@
                 </p>
             </ul>
         </p>
-    </h2>
+    </h3>
 </div>
-
